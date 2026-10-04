@@ -1,0 +1,28 @@
+{
+  "name": "lofibirs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
+    "build": "npm run type-check && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "vue": "^3.5.42"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.4",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "typescript": "~6.0.0",
+    "vite": "^8.3.1",
+    "vitest": "^4.1.11",
+    "vue-tsc": "^3.3.11"
+  }
+}
