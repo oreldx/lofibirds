@@ -1,4 +1,4 @@
-# Règles techniques — Lofibirs
+# Règles techniques — Lofibirds
 
 Ces règles encadrent l'implémentation de la [roadmap](plans/roadmap.md). La roadmap définit le comportement produit ; ce document définit les conventions techniques.
 

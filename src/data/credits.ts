@@ -8,10 +8,10 @@ const publicDomain = {
 
 export const gardenCredit: AssetCredit = {
   author: null,
-  rightsHolder: 'Propriétaire du projet Lofibirs',
-  source: 'Décor fourni pour Lofibirs',
+  rightsHolder: 'Propriétaire du projet Lofibirds',
+  source: 'Décor fourni pour Lofibirds',
   sourceUrl: null,
-  license: 'Utilisation autorisée dans Lofibirs — sans licence publique',
+  license: 'Utilisation autorisée dans Lofibirds — sans licence publique',
   licenseUrl: null,
   modifications: [],
 }
@@ -20,7 +20,7 @@ export const spriteCredit: AssetCredit = {
   author: null,
   source: 'Sprites créés avec OpenAI imagegen',
   sourceUrl: null,
-  license: 'Création pour Lofibirs — sans licence publique',
+  license: 'Création pour Lofibirds — sans licence publique',
   licenseUrl: null,
   modifications: [],
 }

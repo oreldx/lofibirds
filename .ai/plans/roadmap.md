@@ -1,4 +1,4 @@
-# Roadmap générale — Lofibirs
+# Roadmap générale — Lofibirds
 
 ## Vision
 
@@ -70,7 +70,7 @@ Sans musique, sans compte utilisateur et sans fonctionnalités sociales.
 - Première visite : cinq espèces activées à 40 %, ambiance à 25 %, lecture arrêtée.
 - Prévoir un fonctionnement normal si le stockage local est indisponible.
 - Rendre interrupteurs, curseurs et commandes accessibles au clavier, avec libellés explicites et focus visible.
-- Ajouter les crédits discrets, le favicon et les métadonnées de Lofibirs.
+- Ajouter les crédits discrets, le favicon et les métadonnées de Lofibirds.
 
 **Livrable :** expérience complète, accessible et personnalisable entre les visites.
 

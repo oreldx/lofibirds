@@ -1,6 +1,12 @@
-# Lofibirs
+# Lofibirds
 
 Jardin sonore en français, construit avec Vue 3, TypeScript strict et Vite.
+
+La [direction artistique](.ai/direction-artistique.md) propose une interface
+Scandinavian Modern chaleureuse encadrant le jardin en pixel art. La palette,
+les espacements, les cadres et les interrupteurs sont appliqués. Pour installer
+Karla localement, suivre [les instructions de la police](src/assets/fonts/README.md).
+
 Le socle et le catalogue des ressources sont intégrés : un décor, cinq sprites,
 cinq chants et une ambiance. La page actuelle permet de consulter les habitants
 et les crédits ; la scène immersive, le moteur audio et la persistance restent
@@ -43,4 +49,3 @@ Les imports renvoient des URL locales ; ils ne téléchargent pas les sons.
 L’inlining est désactivé afin que même les petits assets obtiennent un fichier
 avec empreinte de contenu. Aucun AudioContext ni accès au stockage n’est créé
 par l’application actuelle ; les fichiers audio ne sont ni préchargés ni lus.
-

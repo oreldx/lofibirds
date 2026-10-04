@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import WelcomePanel from './components/WelcomePanel.vue'
+import GardenScene from './components/GardenScene.vue'
+import GardenPanel from './components/GardenPanel.vue'
+import ResourceCredits from './components/ResourceCredits.vue'
 </script>
 
 <template>
   <main>
-    <WelcomePanel />
+    <div class="garden-page">
+      <header class="page-header">
+        <p class="wordmark">Lofibirds</p>
+      </header>
+      <div class="garden-layout">
+        <GardenScene />
+        <GardenPanel />
+      </div>
+      <ResourceCredits />
+    </div>
   </main>
 </template>
