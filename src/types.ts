@@ -11,7 +11,6 @@ export interface ChannelSettings {
   volume: number
 }
 
-/** Seuls ces réglages pourront être persistés. */
 export interface GardenPreferences {
   species: Record<SpeciesId, ChannelSettings>
   ambience: ChannelSettings
@@ -26,10 +25,12 @@ export type ChannelLoadState =
   | { status: 'error'; message: string }
 
 export interface AssetCredit {
-  author: string
-  sourceUrl: string
+  author: string | null
+  rightsHolder?: string
+  source: string
+  sourceUrl: string | null
   license: string
-  licenseUrl: string
+  licenseUrl: string | null
   modifications: string[]
 }
 

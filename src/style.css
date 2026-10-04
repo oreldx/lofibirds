@@ -112,3 +112,18 @@ li {
   outline: 3px solid #49653c;
   outline-offset: 4px;
 }
+
+.resident { display: flex; align-items: center; gap: 0.5rem; }
+.resident img { width: 5.25rem; height: 3.5rem; object-fit: contain; image-rendering: pixelated; }
+.credits { margin-top: 2rem; border-top: 1px solid #d9dfd0; padding-top: 1.25rem; font: 0.875rem/1.6 system-ui, sans-serif; overflow-wrap: anywhere; }
+.credits summary { cursor: pointer; font-weight: 600; }
+.credits-intro { margin: 0.75rem 0 1.25rem; }
+.credit-group + .credit-group { margin-top: 1.5rem; }
+.credit-group h2 { margin: 0 0 0.75rem; font-size: 1rem; }
+.credit-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 1rem; list-style: none; padding: 0; margin: 0; }
+.credit-list li { padding: 0.75rem; border-left: 2px solid #d9dfd0; }
+.credit-list h3 { font-size: 0.875rem; }
+.credit-author { font-weight: 600; }
+.credit-adaptations { color: #526254; font-size: 0.8125rem; }
+.credit-list h3, .credit-list p { margin: 0 0 0.5rem; }
+a { color: #34562b; text-underline-offset: 0.2em; }

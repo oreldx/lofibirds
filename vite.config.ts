@@ -3,4 +3,8 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
+  build: {
+    // Chaque ressource conserve une URL versionnée indépendante du JavaScript.
+    assetsInlineLimit: 0,
+  },
 })
