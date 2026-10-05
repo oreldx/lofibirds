@@ -1,12 +1,12 @@
 import { reactive, readonly } from 'vue'
-import { createDefaultPreferences } from '../data/defaults'
+import { loadPreferences, savePreferences } from '../storage/preferences'
 import { speciesCatalog } from '../data/species'
 import { ambienceAsset } from '../data/resources'
 import { GardenAudioEngine } from '../audio/GardenAudioEngine'
 import type { AudioSnapshot } from '../audio/GardenAudioEngine'
 import type { ChannelId, ChannelLoadState, SpeciesId } from '../types'
 
-const preferences = reactive(createDefaultPreferences())
+const preferences = reactive(loadPreferences())
 const gardenPreferences = readonly(preferences)
 const audio = reactive<AudioSnapshot>({
   playback: 'stopped', error: null,
@@ -29,11 +29,13 @@ function settings(id: ChannelId) {
 function setChannelEnabled(id: ChannelId, enabled: boolean): void {
   settings(id).enabled = enabled
   engine.setChannel(id, settings(id))
+  savePreferences(preferences)
 }
 
 function setChannelVolume(id: ChannelId, volume: number): void {
   settings(id).volume = Number.isFinite(volume) ? Math.max(0, Math.min(1, volume)) : 0
   engine.setChannel(id, settings(id))
+  savePreferences(preferences)
 }
 
 function setSpeciesEnabled(id: SpeciesId, enabled: boolean): void {

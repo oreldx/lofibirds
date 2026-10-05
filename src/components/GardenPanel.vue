@@ -27,7 +27,7 @@ function togglePlayback(): void {
     </div>
     <div class="panel-heading">
       <h2 id="garden-panel-title">Les habitants</h2>
-      <button type="button" :aria-expanded="expanded" aria-controls="garden-settings" @click="expanded = !expanded">
+      <button type="button" :aria-expanded="expanded" aria-controls="garden-settings" :aria-label="expanded ? 'Replier les réglages du jardin' : 'Afficher les réglages du jardin'" @click="expanded = !expanded">
         {{ expanded ? 'Replier' : 'Afficher' }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m6 14 6-6 6 6" /></svg>
       </button>

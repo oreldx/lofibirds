@@ -107,18 +107,19 @@ Sans musique, sans compte utilisateur et sans fonctionnalités sociales.
 
 Comptes, fonctionnalités sociales, musique, scènes supplémentaires, météo dynamique, changement jour/nuit, installation native, synchronisation entre appareils, fonctionnement hors connexion garanti et service worker. Ces éléments ne font pas partie de la roadmap engagée.
 
-## État initial
+## État actuel
 
-Socle technique écrit : configuration Vue 3 / TypeScript strict / Vite / Vitest,
-page d’accueil française, catalogue des cinq espèces, types partagés et réglages
-initiaux. Aucun moteur audio ni stockage n’est encore implémenté.
+Le socle Vue 3 / TypeScript strict / Vite / Vitest et le verrou npm sont en place.
+Le catalogue local comprend le décor, les cinq sprites, les cinq chants et
+l’ambiance, avec leurs crédits dans l’application. La scène responsive et le
+moteur audio des étapes 2 et 3 sont implémentés.
 
-Validation du socle en attente : l’installation des dépendances est bloquée par
-`ENOTFOUND registry.npmjs.org` dans la session de démarrage. Générer et conserver
-le verrou npm, puis vérifier les types, les tests, le build et le rendu avant de
-valider ce lot. Voir les commandes dans le README.
+Les préférences de l’étape 4 sont sauvegardées automatiquement et restaurées
+sans démarrer l’écoute. Les commandes natives disposent de libellés explicites
+et de focus visibles ; les animations des oiseaux sont supprimées lorsque la
+réduction des animations est demandée. Les crédits repliables et les métadonnées
+sont en place. Le favicon est reporté.
 
-L’étape 1 reste partielle : décor, sprites, chants, ambiance et crédits vérifiés
-sont encore à intégrer. `garden.png` est conservé hors du build tant que sa
-provenance n’a pas été vérifiée. Réaliser les étapes dans l’ordre, en validant
-chaque livrable avant de passer au suivant.
+Les tests de comportement restent à ajouter. Les vérifications navigateur,
+l’écoute prolongée, les mesures, la vérification finale des droits et la
+publication constituent le travail restant de l’étape 5.

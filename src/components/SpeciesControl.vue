@@ -26,7 +26,7 @@ function updateVolume(event: Event): void {
       <img v-if="spriteUrl" :src="spriteUrl" alt="" width="1536" height="1024" />
       <span>{{ name }}</span>
       <span class="species-switch">
-        <input type="checkbox" role="switch" :checked="channel.enabled" @change="updatePresence" />
+        <input type="checkbox" role="switch" :aria-label="`Activer — ${name}`" :checked="channel.enabled" @change="updatePresence" />
         <span class="switch-track" aria-hidden="true" />
       </span>
     </label>

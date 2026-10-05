@@ -8,7 +8,7 @@ import ResourceCredits from './components/ResourceCredits.vue'
   <main>
     <div class="garden-page">
       <header class="page-header">
-        <p class="wordmark">Lofibirds</p>
+        <h1 class="wordmark">Lofibirds</h1>
       </header>
       <div class="garden-layout">
         <GardenScene />
