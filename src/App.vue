@@ -2,6 +2,7 @@
 import GardenScene from './components/GardenScene.vue'
 import GardenPanel from './components/GardenPanel.vue'
 import ResourceCredits from './components/ResourceCredits.vue'
+import PlaybackBar from './components/PlaybackBar.vue'
 </script>
 
 <template>
@@ -17,4 +18,5 @@ import ResourceCredits from './components/ResourceCredits.vue'
       <ResourceCredits />
     </div>
   </main>
+  <PlaybackBar />
 </template>
