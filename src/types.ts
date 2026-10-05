@@ -16,7 +16,9 @@ export interface GardenPreferences {
   ambience: ChannelSettings
 }
 
-export type PlaybackState = 'stopped' | 'playing' | 'paused'
+export type ChannelId = SpeciesId | 'ambience'
+
+export type PlaybackState = 'stopped' | 'starting' | 'playing' | 'paused' | 'interrupted'
 
 export type ChannelLoadState =
   | { status: 'idle' }

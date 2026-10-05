@@ -6,7 +6,5 @@ export default mergeConfig(viteConfig, defineConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
-    // Le socle ne contient pas encore de tests métier.
-    passWithNoTests: true,
   },
 }))
