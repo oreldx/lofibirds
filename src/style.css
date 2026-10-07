@@ -122,8 +122,8 @@ h1 {
 
 .bird-rouge-gorge {
   left: 15%;
-  top: 81%;
-  width: 8%;
+  top: 80%;
+  width: 5%;
 }
 
 .bird-mesange-charbonniere {
@@ -147,10 +147,6 @@ h1 {
 .bird-merle-noir img,
 .bird-moineau-domestique img {
   scale: -1 1;
-}
-
-.bird-rouge-gorge img {
-  animation-delay: -3s;
 }
 
 .bird-mesange-charbonniere img {
@@ -353,6 +349,13 @@ h1 {
   object-fit: contain;
   image-rendering: pixelated;
   transition: opacity 160ms, filter 160ms;
+}
+
+.species-artwork .robin-thumbnail {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .ambience-artwork {

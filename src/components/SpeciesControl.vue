@@ -2,6 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { ChannelId } from '../types'
 import { useGarden } from '../composables/useGarden'
+import RobinSprite from './RobinSprite.vue'
 
 const props = defineProps<{ id: ChannelId; name: string; spriteUrl?: string }>()
 const { preferences, audio, setChannelEnabled, setChannelVolume, retry } = useGarden()
@@ -96,7 +97,8 @@ onBeforeUnmount(() => {
         @blur="focused = false"
       >
         <span class="species-artwork">
-          <img v-if="spriteUrl" :src="spriteUrl" alt="" width="1536" height="1024" draggable="false" />
+          <RobinSprite v-if="id === 'rouge-gorge'" class="robin-thumbnail" />
+          <img v-else-if="spriteUrl" :src="spriteUrl" alt="" width="1536" height="1024" draggable="false" />
           <svg v-else class="ambience-artwork" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M14 48C7 26 24 12 51 10c3 27-10 43-30 39M14 54l28-31M24 44l-1-13m7 7 13-1" />
             <path d="M8 17h13M5 23h10M44 51h12" stroke-linecap="round" />

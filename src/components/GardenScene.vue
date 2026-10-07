@@ -2,6 +2,7 @@
 import { gardenAsset } from '../data/resources'
 import { speciesCatalog } from '../data/species'
 import { useGarden } from '../composables/useGarden'
+import RobinSprite from './RobinSprite.vue'
 
 const { preferences } = useGarden()
 </script>
@@ -11,7 +12,8 @@ const { preferences } = useGarden()
     <img class="garden-background" :src="gardenAsset.url" alt="" width="1672" height="941" fetchpriority="high" />
     <template v-for="species in speciesCatalog" :key="species.id">
       <span v-if="preferences.species[species.id].enabled" class="garden-bird" :class="`bird-${species.id}`" aria-hidden="true">
-        <img :src="species.sprite.url" alt="" width="1536" height="1024" draggable="false" />
+        <RobinSprite v-if="species.id === 'rouge-gorge'" animated />
+        <img v-else :src="species.sprite.url" alt="" width="1536" height="1024" draggable="false" />
       </span>
     </template>
   </figure>

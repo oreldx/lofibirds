@@ -25,6 +25,15 @@ export const spriteCredit: AssetCredit = {
   modifications: [],
 }
 
+export const robinSpritesheetCredit: AssetCredit = {
+  author: null,
+  source: 'Spritesheet du rouge-gorge fourni dans le dépôt Lofibirds',
+  sourceUrl: null,
+  license: 'Licence non renseignée',
+  licenseUrl: null,
+  modifications: ['Affichage des 12 cases en CSS ; fichier original inchangé'],
+}
+
 export const audioCredits = {
   'merle-noir': {
     ...publicDomain,

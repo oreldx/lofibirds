@@ -5,11 +5,11 @@ import greatTitSound from '../assets/audio/mesange-charbonniere.mp3'
 import sparrowSound from '../assets/audio/moineau-domestique.mp3'
 import chaffinchSound from '../assets/audio/pinson-des-arbres.mp3'
 import blackbirdSprite from '../assets/images/merle-noir.png'
-import robinSprite from '../assets/images/rouge-gorge.png'
+import robinSprite from '../assets/images/spritesheet.png'
 import greatTitSprite from '../assets/images/mesange-charbonniere.png'
 import sparrowSprite from '../assets/images/moineau-domestique.png'
 import chaffinchSprite from '../assets/images/pinson-des-arbres.png'
-import { audioCredits, spriteCredit } from './credits'
+import { audioCredits, robinSpritesheetCredit, spriteCredit } from './credits'
 
 export const speciesCatalog = [
   {
@@ -20,7 +20,7 @@ export const speciesCatalog = [
   {
     id: 'rouge-gorge', name: 'Rouge-gorge',
     audio: [{ url: robinSound, credit: audioCredits['rouge-gorge'] }],
-    sprite: { url: robinSprite, credit: spriteCredit },
+    sprite: { url: robinSprite, credit: robinSpritesheetCredit },
   },
   {
     id: 'mesange-charbonniere', name: 'Mésange charbonnière',
