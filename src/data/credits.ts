@@ -15,6 +15,7 @@ export const gardenCredit: AssetCredit = {
   licenseUrl: null,
   modifications: [
     'Animation des nuages et du feuillage par transformations des calques originaux',
+    'Pixelisation des frames avec une taille de pixel de 3, sans lissage, selon la méthode Canvas de Pixel Art Village',
     '16 frames par calque, assemblées en spritesheets 4 × 4',
     'Superposition sur un ciel fixe ; décor original conservé pendant le chargement',
   ],
