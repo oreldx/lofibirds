@@ -1,6 +1,9 @@
+
 # Lofibirds
 
 Jardin sonore en français, construit avec Vue 3, TypeScript strict et Vite.
+
+<img width="1800" height="1013" alt="screen" src="https://github.com/user-attachments/assets/793d1552-855b-44f7-86e9-12ba6d970631" />
 
 La [direction artistique](.ai/direction-artistique.md) propose une interface
 Scandinavian Modern chaleureuse encadrant le jardin en pixel art. La palette,
