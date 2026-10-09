@@ -114,9 +114,29 @@ input {
 }
 
 .garden-bird {
+  --bird-shadow-width: 38%;
+  --bird-shadow-height: 6%;
   position: absolute;
+  isolation: isolate;
   width: 9%;
   transform: translate(-50%, -100%);
+}
+
+/* A stepped contact shadow stays behind the bird as its poses change. */
+.garden-bird::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: var(--bird-shadow-x);
+  top: var(--bird-shadow-y);
+  width: var(--bird-shadow-width);
+  height: var(--bird-shadow-height);
+  transform: translate(-50%, -50%);
+  background: rgb(40 60 50 / 28%);
+  clip-path: polygon(20% 0%, 80% 0%, 80% 25%, 100% 25%,
+      100% 75%, 80% 75%, 80% 100%, 20% 100%,
+      20% 75%, 0% 75%, 0% 25%, 20% 25%);
+  pointer-events: none;
 }
 
 .garden-bird img {
@@ -129,30 +149,47 @@ input {
 }
 
 .bird-merle-noir {
+  /* Contact points include transparent padding and the mirrored sprite. */
+  --bird-shadow-x: 38%;
+  --bird-shadow-y: 88%;
+  --bird-shadow-width: 42%;
   left: 34%;
   top: 74%;
   width: 6%;
 }
 
 .bird-rouge-gorge {
+  --bird-shadow-x: 63%;
+  --bird-shadow-y: 99%;
+  --bird-shadow-width: 40%;
+  --bird-shadow-height: 4%;
   left: 15%;
   top: 80%;
   width: 5%;
 }
 
 .bird-mesange-charbonniere {
+  --bird-shadow-x: 60%;
+  --bird-shadow-y: 87%;
+  --bird-shadow-width: 32%;
+  --bird-shadow-height: 3%;
   left: 26%;
   top: 24%;
   width: 6%;
 }
 
 .bird-moineau-domestique {
+  --bird-shadow-x: 37%;
+  --bird-shadow-y: 95%;
+  --bird-shadow-width: 40%;
   left: 77%;
   top: 80%;
   width: 6%;
 }
 
 .bird-pinson-des-arbres {
+  --bird-shadow-x: 57%;
+  --bird-shadow-y: 89%;
   left: 61%;
   top: 75%;
   width: 5%;
@@ -221,8 +258,13 @@ input {
 }
 
 @keyframes drawer-appear {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .garden-toolbar {
@@ -797,7 +839,7 @@ a {
     right: max(var(--scene-inset), env(safe-area-inset-right, 0px));
   }
 
-  .drawer-content > .sound-panel {
+  .drawer-content>.sound-panel {
     max-width: 32rem;
     margin-left: auto;
     margin-right: auto;
@@ -805,6 +847,7 @@ a {
 }
 
 @media (width < 480px) {
+
   .playback-label,
   .drawer-button-label {
     display: none;
