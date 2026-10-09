@@ -72,7 +72,7 @@ function navigateTabs(event: KeyboardEvent): void {
     <div id="species-panel" v-show="activeGroup === 'species'" role="tabpanel" aria-labelledby="species-tab" class="sound-panel">
       <ul class="species-list" aria-label="Espèces du jardin">
         <li v-for="species in speciesCatalog" :key="species.id">
-          <SpeciesControl :id="species.id" :name="species.name" :sprite-url="species.sprite.url" />
+          <SpeciesControl :id="species.id" :name="species.name" :photo-url="species.photo.url" />
         </li>
       </ul>
     </div>

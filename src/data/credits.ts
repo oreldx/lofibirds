@@ -30,6 +30,15 @@ export const spriteCredit: AssetCredit = {
   modifications: [],
 }
 
+export const speciesPhotoCredit: AssetCredit = {
+  author: null,
+  source: 'Photodoiso',
+  sourceUrl: 'https://www.photodoiso.fr/',
+  license: 'CC BY-NC-ND 4.0',
+  licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+  modifications: ['Fichiers renommés selon les espèces', 'Recadrage à l’affichage dans les cartes ; fichiers originaux inchangés'],
+}
+
 export const robinSpritesheetCredit: AssetCredit = {
   author: null,
   source: 'Spritesheet du rouge-gorge fourni dans le dépôt Lofibirds',

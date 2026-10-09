@@ -12,6 +12,10 @@ const groups: { name: string; resources: { name: string; credit: AssetCredit }[]
     ],
   },
   {
+    name: 'Photographies',
+    resources: speciesCatalog.map((species) => ({ name: species.name, credit: species.photo.credit })),
+  },
+  {
     name: 'Chants d’oiseaux',
     resources: speciesCatalog.flatMap((species) =>
       species.audio.map((asset) => ({ name: species.name, credit: asset.credit })),

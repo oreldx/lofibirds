@@ -45,6 +45,7 @@ export interface CreditedAsset {
 export interface SpeciesDefinition {
   id: SpeciesId
   name: string
+  photo: CreditedAsset
   /** Liste vide tant qu’aucun enregistrement n’a été vérifié. */
   audio: readonly CreditedAsset[]
   /** null tant qu’aucun sprite n’a été vérifié. */
