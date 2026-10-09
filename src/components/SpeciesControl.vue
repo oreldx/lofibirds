@@ -54,7 +54,10 @@ function focusControl(): void {
 }
 
 function dismissTooltip(event: KeyboardEvent): void {
-  if (event.key === 'Escape') tooltipDismissed.value = true
+  if (event.key === 'Escape' && showTooltip.value) {
+    event.preventDefault()
+    tooltipDismissed.value = true
+  }
 }
 
 function updateVolume(event: Event): void {
@@ -99,6 +102,7 @@ onBeforeUnmount(() => {
         @pointerleave="leaveTooltip"
         @focus="focusControl"
         @blur="focused = false"
+        @keydown="dismissTooltip"
       >
         <span class="species-artwork">
           <RobinSprite v-if="id === 'rouge-gorge'" />
@@ -131,7 +135,6 @@ onBeforeUnmount(() => {
       </template>
     </div>
   </div>
-  <Teleport to="body">
+  <!-- Keep the tooltip inside the dialog so it remains visible in the modal top layer. -->
     <span v-if="showTooltip" class="species-tooltip" role="tooltip" :style="tooltipPosition" @pointerenter="enterTooltip" @pointerleave="leaveTooltip">{{ name }}</span>
-  </Teleport>
 </template>

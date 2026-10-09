@@ -53,7 +53,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <figure class="garden-scene" :class="{ 'garden-scene-paused': pageHidden }" role="img" aria-label="Un jardin européen au matin de printemps, avec un grand arbre, des fleurs, un muret et une barrière. Choisissez les oiseaux présents dans l’onglet Espèces de la barre de contrôle sous le jardin.">
+  <figure class="garden-scene" :class="{ 'garden-scene-paused': pageHidden }" role="img" aria-label="Un jardin européen au matin de printemps, avec un grand arbre, des fleurs, un muret et une barrière. Choisissez les oiseaux présents dans l’onglet Espèces du panneau de réglages.">
+    <div class="garden-surface">
     <img class="garden-background" :src="layersReady ? gardenSkyAsset.url : gardenAsset.url" alt="" width="1672" height="941" fetchpriority="high" />
     <template v-if="layersReady">
       <span
@@ -74,6 +75,7 @@ onUnmounted(() => {
         <ChaffinchSprite v-else-if="species.id === 'pinson-des-arbres'" animated />
       </span>
     </template>
+    </div>
   </figure>
 </template>
 
