@@ -9,11 +9,15 @@ const publicDomain = {
 export const gardenCredit: AssetCredit = {
   author: null,
   rightsHolder: 'Propriétaire du projet Lofibirds',
-  source: 'Décor fourni pour Lofibirds',
+  source: 'Décor et calques fournis pour Lofibirds',
   sourceUrl: null,
   license: 'Utilisation autorisée dans Lofibirds — sans licence publique',
   licenseUrl: null,
-  modifications: [],
+  modifications: [
+    'Animation des nuages et du feuillage par transformations des calques originaux',
+    '16 frames par calque, assemblées en spritesheets 4 × 4',
+    'Superposition sur un ciel fixe ; décor original conservé pendant le chargement',
+  ],
 }
 
 export const spriteCredit: AssetCredit = {

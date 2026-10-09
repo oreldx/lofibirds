@@ -13,6 +13,17 @@ canal séparé « Brise et feuillage ». Un volume nul conserve l’oiseau visib
 L’écoute démarre uniquement avec « Écouter le jardin » et s’arrête avec « Pause ».
 Les crédits des illustrations et des sons sont accessibles en bas de page.
 
+`GardenScene` superpose trois calques animés sur un ciel fixe : nuages en
+12 secondes, arrière-plan en 4 secondes et premier plan en 3 secondes. Chaque
+spritesheet contient 16 frames en grille 4 × 4, parcourues sans interpolation.
+Le décor original reste affiché jusqu’au décodage de toutes les images, ou si
+leur chargement échoue. Les oiseaux conservent leurs positions devant le décor.
+L’animation est indépendante du son, se suspend dans un onglet masqué et se
+fige si la réduction des animations est demandée. Lorsque cette préférence est
+active au démarrage, les spritesheets ne sont pas chargées. Les sources, frames
+et instructions de reconstruction sont dans
+[output/garden-animation](output/garden-animation/README.md).
+
 Les cinq oiseaux utilisent chacun un spritesheet de 12 poses : chaque séquence
 est jouée à 4 images/s pendant 3 secondes, avec un repos aléatoire de 8 à 25
 secondes avant chaque séquence. Leurs vignettes affichent uniquement la pose de repos.
