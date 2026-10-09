@@ -34,6 +34,15 @@ export const robinSpritesheetCredit: AssetCredit = {
   modifications: ['Affichage des 12 cases en CSS ; fichier original inchangé'],
 }
 
+export const generatedSpritesheetCredit: AssetCredit = {
+  author: null,
+  source: 'Sprite original et 11 poses créés avec OpenAI imagegen pour Lofibirds',
+  sourceUrl: null,
+  license: 'Création pour Lofibirds — sans licence publique',
+  licenseUrl: null,
+  modifications: ['11 poses générées à partir du sprite original', 'Réduction au plus proche voisin et assemblage en grille 4 × 3', 'Affichage des 12 cases en CSS'],
+}
+
 export const audioCredits = {
   'merle-noir': {
     ...publicDomain,

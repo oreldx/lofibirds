@@ -13,9 +13,9 @@ canal séparé « Brise et feuillage ». Un volume nul conserve l’oiseau visib
 L’écoute démarre uniquement avec « Écouter le jardin » et s’arrête avec « Pause ».
 Les crédits des illustrations et des sons sont accessibles en bas de page.
 
-Le rouge-gorge utilise désormais le spritesheet de 12 poses : chaque séquence
+Les cinq oiseaux utilisent chacun un spritesheet de 12 poses : chaque séquence
 est jouée à 4 images/s pendant 3 secondes, avec un repos aléatoire de 8 à 25
-secondes avant chaque séquence. Sa vignette affiche uniquement la pose de repos.
+secondes avant chaque séquence. Leurs vignettes affichent uniquement la pose de repos.
 Désactiver l’espèce annule sa minuterie ; masquer l’onglet ou demander une
 réduction des animations arrête le mouvement. Le chant reste indépendant.
 
@@ -63,7 +63,7 @@ de lire/mettre en pause les 12 poses en boucle continue, régler la vitesse de 1
 agrandir l’oiseau et sélectionner une pose fixe. Elle est également incluse
 dans le build et accessible avec `npm run preview`.
 
-Le fichier original `src/assets/images/spritesheet.png` mesure 404 × 270 pixels :
+Le fichier original `src/assets/images/rouge-gorge-spritesheet.png` mesure 404 × 270 pixels :
 une grille de 4 × 3 cases de 101 × 90 pixels, parcourue ligne par ligne.
 L’animation native CSS utilise `background-position` et `steps(1, end)` pour
 changer de case sans interpolation, avec `image-rendering: pixelated`.
@@ -77,6 +77,42 @@ Cette ressource a été fournie dans le dépôt ; son auteur et sa licence
 ne sont pas renseignés. Elle est utilisée telle quelle dans le jardin et cet
 essai, avec des crédits distincts des anciens sprites. L’ordre retenu suit
 les cases de gauche à droite, puis de haut en bas.
+
+## Spritesheets générées pour les quatre autres oiseaux
+
+Les spritesheets du merle, de la mésange, du moineau et du pinson sont des
+grilles 4 × 3 de 768 × 384 pixels, avec des cases de 192 × 128 pixels. La première case
+vient de l’asset original, conservé ; les 11 suivantes sont des variations
+générées séparément avec l’outil intégré OpenAI imagegen, toutes référencées
+sur l’original pour limiter la dérive. La séquence suit une respiration, un
+clignement, une légère inclinaison de tête et une ouverture du bec, puis le repos.
+
+Les 12 frames sources et les prompts de chaque espèce sont conservés dans
+son dossier `output/imagegen/<identifiant>/`. Le cadrage est commun à toutes les
+frames ; l’assemblage conserve l’alpha et réduit les images au plus proche
+voisin, sans lissage. Pour reconstruire la grille :
+
+```sh
+node scripts/assemble-bird-spritesheet.mjs output/imagegen/mesange-charbonniere/frames src/assets/images/mesange-charbonniere-spritesheet.png
+node scripts/assemble-bird-spritesheet.mjs output/imagegen/pinson-des-arbres/frames src/assets/images/pinson-des-arbres-spritesheet.png
+node scripts/assemble-bird-spritesheet.mjs output/imagegen/merle-noir/frames src/assets/images/merle-noir-spritesheet.png
+node scripts/assemble-bird-spritesheet.mjs output/imagegen/moineau-domestique/frames src/assets/images/moineau-domestique-spritesheet.png
+```
+
+Avec `npm run dev`, ouvrir l’un des aperçus suivants pour lire la boucle,
+régler sa vitesse et inspecter chaque pose :
+
+| Espèce | Aperçu | Prompts et provenance |
+| --- | --- | --- |
+| Mésange charbonnière | [Aperçu](output/imagegen/mesange-charbonniere/preview.html) | [Génération](output/imagegen/mesange-charbonniere/generation.json) |
+| Pinson des arbres | [Aperçu](output/imagegen/pinson-des-arbres/preview.html) | [Génération](output/imagegen/pinson-des-arbres/generation.json) |
+| Merle noir | [Aperçu](output/imagegen/merle-noir/preview.html) | [Génération](output/imagegen/merle-noir/generation.json) |
+| Moineau domestique | [Aperçu](output/imagegen/moineau-domestique/preview.html) | [Génération](output/imagegen/moineau-domestique/generation.json) |
+
+Ces pages de travail sont également ouvrables directement depuis le disque ;
+elles ne font pas partie du build de production. Le merle et le moineau restent
+orientés vers la gauche dans le jardin. Les cinq oiseaux suivent les mêmes règles de repos,
+de réduction des animations et de visibilité que le rouge-gorge.
 
 ## Architecture
 
