@@ -2,6 +2,11 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { ChannelId } from '../types'
 import { useGarden } from '../composables/useGarden'
+import RobinSprite from './RobinSprite.vue'
+import GreatTitSprite from './GreatTitSprite.vue'
+import BlackbirdSprite from './BlackbirdSprite.vue'
+import SparrowSprite from './SparrowSprite.vue'
+import ChaffinchSprite from './ChaffinchSprite.vue'
 
 const props = defineProps<{ id: ChannelId; name: string; spriteUrl?: string }>()
 const { preferences, audio, setChannelEnabled, setChannelVolume, retry } = useGarden()
@@ -49,7 +54,10 @@ function focusControl(): void {
 }
 
 function dismissTooltip(event: KeyboardEvent): void {
-  if (event.key === 'Escape') tooltipDismissed.value = true
+  if (event.key === 'Escape' && showTooltip.value) {
+    event.preventDefault()
+    tooltipDismissed.value = true
+  }
 }
 
 function updateVolume(event: Event): void {
@@ -94,9 +102,15 @@ onBeforeUnmount(() => {
         @pointerleave="leaveTooltip"
         @focus="focusControl"
         @blur="focused = false"
+        @keydown="dismissTooltip"
       >
         <span class="species-artwork">
-          <img v-if="spriteUrl" :src="spriteUrl" alt="" width="1536" height="1024" draggable="false" />
+          <RobinSprite v-if="id === 'rouge-gorge'" />
+          <GreatTitSprite v-else-if="id === 'mesange-charbonniere'" />
+          <BlackbirdSprite v-else-if="id === 'merle-noir'" />
+          <SparrowSprite v-else-if="id === 'moineau-domestique'" />
+          <ChaffinchSprite v-else-if="id === 'pinson-des-arbres'" />
+          <img v-else-if="spriteUrl" :src="spriteUrl" alt="" width="1536" height="1024" draggable="false" />
           <svg v-else class="ambience-artwork" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M14 48C7 26 24 12 51 10c3 27-10 43-30 39M14 54l28-31M24 44l-1-13m7 7 13-1" />
             <path d="M8 17h13M5 23h10M44 51h12" stroke-linecap="round" />
@@ -121,7 +135,6 @@ onBeforeUnmount(() => {
       </template>
     </div>
   </div>
-  <Teleport to="body">
+  <!-- Keep the tooltip inside the dialog so it remains visible in the modal top layer. -->
     <span v-if="showTooltip" class="species-tooltip" role="tooltip" :style="tooltipPosition" @pointerenter="enterTooltip" @pointerleave="leaveTooltip">{{ name }}</span>
-  </Teleport>
 </template>

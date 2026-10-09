@@ -9,11 +9,16 @@ const publicDomain = {
 export const gardenCredit: AssetCredit = {
   author: null,
   rightsHolder: 'Propriétaire du projet Lofibirds',
-  source: 'Décor fourni pour Lofibirds',
+  source: 'Décor et calques fournis pour Lofibirds',
   sourceUrl: null,
   license: 'Utilisation autorisée dans Lofibirds — sans licence publique',
   licenseUrl: null,
-  modifications: [],
+  modifications: [
+    'Animation des nuages et du feuillage par transformations des calques originaux',
+    'Pixelisation des frames avec une taille de pixel de 3, sans lissage, selon la méthode Canvas de Pixel Art Village',
+    '16 frames par calque, assemblées en spritesheets 4 × 4',
+    'Superposition sur un ciel fixe ; décor original conservé pendant le chargement',
+  ],
 }
 
 export const spriteCredit: AssetCredit = {
@@ -23,6 +28,24 @@ export const spriteCredit: AssetCredit = {
   license: 'Création pour Lofibirds — sans licence publique',
   licenseUrl: null,
   modifications: [],
+}
+
+export const robinSpritesheetCredit: AssetCredit = {
+  author: null,
+  source: 'Spritesheet du rouge-gorge fourni dans le dépôt Lofibirds',
+  sourceUrl: null,
+  license: 'Licence non renseignée',
+  licenseUrl: null,
+  modifications: ['Affichage des 12 cases en CSS ; fichier original inchangé'],
+}
+
+export const generatedSpritesheetCredit: AssetCredit = {
+  author: null,
+  source: 'Sprite original et 11 poses créés avec OpenAI imagegen pour Lofibirds',
+  sourceUrl: null,
+  license: 'Création pour Lofibirds — sans licence publique',
+  licenseUrl: null,
+  modifications: ['11 poses générées à partir du sprite original', 'Réduction au plus proche voisin et assemblage en grille 4 × 3', 'Affichage des 12 cases en CSS'],
 }
 
 export const audioCredits = {
