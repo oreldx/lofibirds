@@ -1,19 +1,34 @@
-import type { ChannelId, ChannelLoadState, ChannelSettings, GardenPreferences, PlaybackState } from '../types'
+import type { ChannelId, ChannelLoadState, ChannelSettings, GardenPreferences, PlaybackState, ScenePosition } from '../types'
 import { createAmbienceLoop } from './ambience'
+import { BirdScheduler } from './BirdScheduler'
+import type { BirdEvent, SchedulableBird } from './BirdScheduler'
 
 const FADE = 0.1
-const LOOKAHEAD = 180
+
+export interface AudioChannelAssets {
+  urls: readonly string[]
+  position?: ScenePosition
+}
+
+interface SourceNodes {
+  start: number
+  end: number
+  peak: number
+  fade: number
+  envelope: GainNode
+  panner?: StereoPannerNode
+}
 
 interface Channel {
   id: ChannelId
   urls: readonly string[]
+  position: ScenePosition
   settings: ChannelSettings
   load: ChannelLoadState
   buffers?: AudioBuffer[]
   pending?: Promise<void>
   gain?: GainNode
-  sources: Map<AudioBufferSourceNode, { start: number; envelope: GainNode }>
-  nextStart?: number
+  sources: Map<AudioBufferSourceNode, SourceNodes>
   generation: number
 }
 
@@ -42,8 +57,9 @@ const browserDependencies: AudioDependencies = {
 /** Une session audio ; aucun accès à Vue, aux composants ou au document. */
 export class GardenAudioEngine {
   private readonly channels: Channel[]
+  private readonly scheduler: BirdScheduler
   private readonly cache = new Map<string, Promise<AudioBuffer>>()
-  private readonly allSources = new Map<AudioBufferSourceNode, GainNode>()
+  private readonly allSources = new Map<AudioBufferSourceNode, { channel: Channel; nodes: SourceNodes }>()
   private readonly ramps = new WeakMap<AudioParam, { from: number; to: number; start: number; end: number }>()
   private context?: AudioContext
   private output?: GainNode
@@ -55,13 +71,15 @@ export class GardenAudioEngine {
   private error: string | null = null
 
   constructor(
-    assets: Record<ChannelId, readonly string[]>,
+    assets: Record<ChannelId, AudioChannelAssets>,
     preferences: GardenPreferences,
     private readonly publish: (snapshot: AudioSnapshot) => void,
     private readonly dependencies: AudioDependencies = browserDependencies,
   ) {
-    this.channels = (Object.entries(assets) as [ChannelId, readonly string[]][]).map(([id, urls]) => ({
-      id, urls, settings: { ...(id === 'ambience' ? preferences.ambience : preferences.species[id]) },
+    this.scheduler = new BirdScheduler(dependencies.random)
+    this.channels = (Object.entries(assets) as [ChannelId, AudioChannelAssets][]).map(([id, asset]) => ({
+      id, urls: asset.urls, position: asset.position ?? { x: 0.5, y: 0.5 },
+      settings: { ...(id === 'ambience' ? preferences.ambience : preferences.species[id]) },
       load: { status: 'idle' }, sources: new Map(), generation: 0,
     }))
     this.notify()
@@ -69,6 +87,7 @@ export class GardenAudioEngine {
 
   async play(): Promise<void> {
     if (this.disposed || (this.wanted && (this.playback === 'playing' || this.playback === 'starting'))) return
+    const reset = this.playback !== 'interrupted'
     const generation = ++this.generation
     this.wanted = true
     this.playback = 'starting'
@@ -81,7 +100,7 @@ export class GardenAudioEngine {
       if (!this.wanted || this.disposed || generation !== this.generation) return
       if (context.state !== 'running') throw new Error('Le navigateur a interrompu l’écoute. Réessayez pour la reprendre.')
       this.playback = 'playing'
-      this.beginScheduling()
+      this.beginScheduling(reset)
       this.notify()
     } catch {
       if (this.disposed || generation !== this.generation) return
@@ -112,6 +131,7 @@ export class GardenAudioEngine {
       channel.generation++
       if (!settings.enabled) this.stopChannel(channel, true)
       else if (this.playback === 'playing') this.activate(channel)
+      if (id !== 'ambience') this.replanBirds()
     } else if (channel.gain && this.context) {
       this.ramp(channel.gain.gain, settings.enabled ? channel.settings.volume : 0)
     }
@@ -133,11 +153,9 @@ export class GardenAudioEngine {
     this.wanted = false
     this.generation++
     this.cancelScheduling(false)
-    for (const [source, envelope] of this.allSources) {
+    for (const [source, { channel, nodes }] of this.allSources) {
       source.stop()
-      source.disconnect()
-      envelope.disconnect()
-      source.onended = null
+      this.releaseSource(channel, source, nodes)
     }
     this.allSources.clear()
     if (this.context) {
@@ -200,9 +218,11 @@ export class GardenAudioEngine {
     }
   }
 
-  private beginScheduling(): void {
+  private beginScheduling(reset = false): void {
     if (this.timer !== undefined) clearInterval(this.timer)
+    if (reset) this.scheduler.reset(this.context!.currentTime)
     for (const channel of this.channels) if (channel.settings.enabled) this.activate(channel)
+    this.schedule()
     this.timer = setInterval(() => this.schedule(), 1000)
   }
 
@@ -210,13 +230,12 @@ export class GardenAudioEngine {
     const generation = channel.generation
     void this.loadChannel(channel).then(() => {
       if (this.disposed || this.playback !== 'playing' || !channel.settings.enabled || generation !== channel.generation || !channel.buffers) return
-      if (channel.sources.size > 0) return
       this.ramp(channel.gain!.gain, channel.settings.volume)
       if (channel.id === 'ambience') {
+        if (channel.sources.size > 0) return
         this.startSource(channel, channel.buffers[0]!, this.context!.currentTime + FADE, true)
       } else {
-        channel.nextStart = this.firstStart()
-        this.scheduleChannel(channel)
+        this.replanBirds()
       }
     })
   }
@@ -262,58 +281,84 @@ export class GardenAudioEngine {
     return pending
   }
 
-  private firstStart(): number {
-    return this.context!.currentTime + 0.2 + this.dependencies.random() * 5.8
-  }
-
   private schedule(): void {
     if (this.disposed || this.playback !== 'playing' || this.context?.state !== 'running') return
+    const now = this.context.currentTime
+    // Les callbacks ended peuvent eux aussi être retardés par un gel du thread.
+    for (const [source, { channel, nodes }] of this.allSources) {
+      if (nodes.end <= now) this.releaseSource(channel, source, nodes)
+    }
+    const birds: SchedulableBird[] = []
     for (const channel of this.channels) {
-      if (channel.settings.enabled && channel.id !== 'ambience' && channel.buffers) this.scheduleChannel(channel)
+      if (channel.id !== 'ambience' && channel.settings.enabled && channel.buffers) {
+        birds.push({ id: channel.id, durations: channel.buffers.map((buffer) => buffer.duration), position: channel.position })
+      }
+    }
+    for (const event of this.scheduler.extend(now, birds)) {
+      const channel = this.channel(event.species)
+      this.startSource(channel, channel.buffers![event.clip]!, event.start, false, event)
     }
   }
 
-  private scheduleChannel(channel: Channel): void {
-    const now = this.context!.currentTime
-    // Aucun rattrapage des départs manqués si le thread a été gelé longtemps.
-    if (channel.nextStart === undefined || channel.nextStart < now) channel.nextStart = this.firstStart()
-    while (channel.nextStart < now + LOOKAHEAD) {
-      const buffers = channel.buffers!
-      const index = Math.min(buffers.length - 1, Math.floor(this.dependencies.random() * buffers.length))
-      const buffer = buffers[index]!
-      this.startSource(channel, buffer, channel.nextStart)
-      channel.nextStart += buffer.duration + 8 + this.dependencies.random() * 17
+  private replanBirds(): void {
+    if (this.disposed || this.playback !== 'playing' || this.context?.state !== 'running') return
+    const now = this.context.currentTime
+    this.scheduler.replan(now)
+    for (const [source, { channel, nodes }] of this.allSources) {
+      if (channel.id !== 'ambience' && nodes.start > now) {
+        source.stop(now)
+        this.releaseSource(channel, source, nodes)
+      }
     }
+    this.schedule()
   }
 
-  private startSource(channel: Channel, buffer: AudioBuffer, when: number, loop = false): void {
+  private startSource(channel: Channel, buffer: AudioBuffer, when: number, loop = false, event?: BirdEvent): void {
     const source = this.context!.createBufferSource()
     const envelope = this.context!.createGain()
+    const end = loop ? Infinity : when + buffer.duration
+    const fade = loop ? FADE : Math.min(FADE, buffer.duration / 2)
+    const peak = event?.gain ?? 1
+    const panner = event ? this.context!.createStereoPanner() : undefined
     source.buffer = buffer
     source.loop = loop
     envelope.gain.value = 0
     envelope.gain.setValueAtTime(0, when)
-    envelope.gain.linearRampToValueAtTime(1, when + FADE)
-    this.ramps.set(envelope.gain, { from: 0, to: 1, start: when, end: when + FADE })
-    source.connect(envelope)
-    envelope.connect(channel.gain!)
-    source.onended = () => {
-      channel.sources.delete(source)
-      this.allSources.delete(source)
-      source.disconnect()
-      envelope.disconnect()
+    envelope.gain.linearRampToValueAtTime(peak, when + fade)
+    if (!loop) {
+      envelope.gain.setValueAtTime(peak, end - fade)
+      envelope.gain.linearRampToValueAtTime(0, end)
     }
-    channel.sources.set(source, { start: when, envelope })
-    this.allSources.set(source, envelope)
+    source.connect(envelope)
+    if (panner) {
+      panner.pan.setValueAtTime(event!.pan, when)
+      envelope.connect(panner)
+      panner.connect(channel.gain!)
+    } else {
+      envelope.connect(channel.gain!)
+    }
+    const nodes: SourceNodes = { start: when, end, peak, fade, envelope, panner }
+    source.onended = () => this.releaseSource(channel, source, nodes)
+    channel.sources.set(source, nodes)
+    this.allSources.set(source, { channel, nodes })
     source.start(when)
   }
 
-  private ramp(param: AudioParam, target: number): void {
+  private releaseSource(channel: Channel, source: AudioBufferSourceNode, nodes: SourceNodes): void {
+    channel.sources.delete(source)
+    this.allSources.delete(source)
+    source.onended = null
+    source.disconnect()
+    nodes.envelope.disconnect()
+    nodes.panner?.disconnect()
+  }
+
+  private ramp(param: AudioParam, target: number, current?: number): void {
     const now = this.context!.currentTime
     const previous = this.ramps.get(param)
-    const held = previous
+    const held = current ?? (previous
       ? previous.from + (previous.to - previous.from) * Math.max(0, Math.min(1, (now - previous.start) / (previous.end - previous.start)))
-      : param.value
+      : param.value)
     // Compatible aussi avec les navigateurs sans cancelAndHoldAtTime.
     param.cancelScheduledValues(now)
     param.setValueAtTime(held, now)
@@ -325,25 +370,38 @@ export class GardenAudioEngine {
     const context = this.context
     if (context && channel.gain) {
       const stopTime = context.currentTime + (fade && context.state === 'running' ? FADE : 0)
+      if (channel.id !== 'ambience') this.scheduler.stopSpecies(channel.id, context.currentTime, stopTime)
       if (fade) this.ramp(channel.gain.gain, 0)
       else {
         channel.gain.gain.cancelScheduledValues(context.currentTime)
         channel.gain.gain.setValueAtTime(0, context.currentTime)
         this.ramps.delete(channel.gain.gain)
       }
-      for (const [source, { start, envelope }] of channel.sources) {
-        if (fade && start <= context.currentTime) this.ramp(envelope.gain, 0)
-        source.stop(start > context.currentTime ? context.currentTime : stopTime)
+      for (const [source, nodes] of channel.sources) {
+        if (nodes.end <= context.currentTime || nodes.start > context.currentTime) {
+          source.stop(context.currentTime)
+          this.releaseSource(channel, source, nodes)
+          continue
+        }
+        if (fade) {
+          const level = nodes.peak * Math.max(0, Math.min(1,
+            (context.currentTime - nodes.start) / nodes.fade,
+            (nodes.end - context.currentTime) / nodes.fade,
+          ))
+          this.ramp(nodes.envelope.gain, 0, level)
+        }
+        nodes.end = Math.min(nodes.end, stopTime)
+        source.stop(nodes.end)
         // Les callbacks ended restent responsables de déconnecter les sources.
       }
     }
     channel.sources.clear()
-    channel.nextStart = undefined
   }
 
   private cancelScheduling(fade: boolean): void {
     if (this.timer !== undefined) clearInterval(this.timer)
     this.timer = undefined
+    if (this.context) this.scheduler.replan(this.context.currentTime)
     for (const channel of this.channels) {
       channel.generation++
       this.stopChannel(channel, fade)
