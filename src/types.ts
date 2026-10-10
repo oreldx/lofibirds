@@ -42,10 +42,17 @@ export interface CreditedAsset {
   credit: AssetCredit
 }
 
+/** Coordonnées normalisées dans le jardin, de gauche à droite et de haut en bas. */
+export interface ScenePosition {
+  x: number
+  y: number
+}
+
 export interface SpeciesDefinition {
   id: SpeciesId
   name: string
   photo: CreditedAsset
+  position: ScenePosition
   /** Liste vide tant qu’aucun enregistrement n’a été vérifié. */
   audio: readonly CreditedAsset[]
   /** null tant qu’aucun sprite n’a été vérifié. */

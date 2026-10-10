@@ -3,7 +3,7 @@ import { loadPreferences, savePreferences } from '../storage/preferences'
 import { speciesCatalog } from '../data/species'
 import { ambienceAsset } from '../data/resources'
 import { GardenAudioEngine } from '../audio/GardenAudioEngine'
-import type { AudioSnapshot } from '../audio/GardenAudioEngine'
+import type { AudioChannelAssets, AudioSnapshot } from '../audio/GardenAudioEngine'
 import type { ChannelId, ChannelLoadState, SpeciesId } from '../types'
 
 const preferences = reactive(loadPreferences())
@@ -15,9 +15,11 @@ const audio = reactive<AudioSnapshot>({
 const audioState = readonly(audio)
 const engine = new GardenAudioEngine(
   Object.fromEntries([
-    ...speciesCatalog.map((species) => [species.id, species.audio.map((asset) => asset.url)]),
-    ['ambience', [ambienceAsset.url]],
-  ]) as Record<ChannelId, readonly string[]>,
+    ...speciesCatalog.map((species) => [species.id, {
+      urls: species.audio.map((asset) => asset.url), position: species.position,
+    }]),
+    ['ambience', { urls: [ambienceAsset.url] }],
+  ]) as Record<ChannelId, AudioChannelAssets>,
   preferences,
   (snapshot) => Object.assign(audio, snapshot),
 )

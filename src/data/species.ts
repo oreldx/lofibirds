@@ -19,30 +19,35 @@ import { audioCredits, generatedSpritesheetCredit, robinSpritesheetCredit, speci
 export const speciesCatalog = [
   {
     id: 'merle-noir', name: 'Merle noir',
+    position: { x: 0.34, y: 0.74 },
     photo: { url: blackbirdPhoto, credit: speciesPhotoCredit },
     audio: [{ url: blackbirdSound, credit: audioCredits['merle-noir'] }],
     sprite: { url: blackbirdSprite, credit: generatedSpritesheetCredit },
   },
   {
     id: 'rouge-gorge', name: 'Rouge-gorge',
+    position: { x: 0.15, y: 0.8 },
     photo: { url: robinPhoto, credit: speciesPhotoCredit },
     audio: [{ url: robinSound, credit: audioCredits['rouge-gorge'] }],
     sprite: { url: robinSprite, credit: robinSpritesheetCredit },
   },
   {
     id: 'mesange-charbonniere', name: 'Mésange charbonnière',
+    position: { x: 0.26, y: 0.24 },
     photo: { url: greatTitPhoto, credit: speciesPhotoCredit },
     audio: [{ url: greatTitSound, credit: audioCredits['mesange-charbonniere'] }],
     sprite: { url: greatTitSprite, credit: generatedSpritesheetCredit },
   },
   {
     id: 'moineau-domestique', name: 'Moineau domestique',
+    position: { x: 0.77, y: 0.8 },
     photo: { url: sparrowPhoto, credit: speciesPhotoCredit },
     audio: [{ url: sparrowSound, credit: audioCredits['moineau-domestique'] }],
     sprite: { url: sparrowSprite, credit: generatedSpritesheetCredit },
   },
   {
     id: 'pinson-des-arbres', name: 'Pinson des arbres',
+    position: { x: 0.61, y: 0.75 },
     photo: { url: chaffinchPhoto, credit: speciesPhotoCredit },
     audio: [{ url: chaffinchSound, credit: audioCredits['pinson-des-arbres'] }],
     sprite: { url: chaffinchSprite, credit: generatedSpritesheetCredit },
