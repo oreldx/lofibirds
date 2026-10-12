@@ -21,13 +21,13 @@ Ces règles encadrent l'implémentation de la [roadmap](plans/roadmap.md). La ro
 
 ## Moteur audio
 
-- Utiliser Web Audio API avec une seule instance du moteur et un seul `AudioContext` pour la session, un gain par espèce, un gain d'ambiance et une sortie commune.
+- Utiliser Web Audio API avec une seule instance du moteur et un seul `AudioContext` pour la session, un gain par espèce, un gain par ambiance et une sortie commune.
 - Démarrer ou reprendre l'audio uniquement après une action explicite ; la restauration des préférences ne déclenche jamais la lecture.
 - Programmer les sources sur l'horloge audio avec une anticipation adaptée aux intervalles de 8 à 25 secondes. Ne pas compter uniquement sur `setTimeout`, `setInterval` ou `requestAnimationFrame` pour l'écoute en arrière-plan.
 - Valider la continuité dans un onglet masqué sur les navigateurs desktop ciblés : la programmation anticipée ne garantit pas à elle seule la continuité face aux suspensions du navigateur ou du système.
 - À la pause, arrêter les sources actives et futures et annuler la programmation ; à la reprise, recréer une seule programmation. Lors d'une suspension, éviter tout rattrapage en rafale.
 - Empêcher une espèce de se superposer à elle-même. Désactiver un canal annule ses sons programmés ; un volume nul conserve l'oiseau visible.
-- Appliquer des transitions douces aux gains et un fondu aux raccords de l'ambiance ; préserver vitesse et hauteur des enregistrements.
+- Appliquer des transitions douces aux gains et un fondu aux raccords des ambiances ; préserver vitesse et hauteur des enregistrements.
 - Charger et décoder seulement les canaux utiles à l'écoute. Mutualiser les requêtes en cours et réutiliser les buffers décodés pendant la session, y compris après pause/reprise.
 - Si un chargement se termine après une pause ou une désactivation, ne pas démarrer le canal devenu inactif.
 - Isoler les erreurs par canal, laisser les autres fonctionner et permettre une nouvelle tentative sans boucle de requêtes automatique.
@@ -47,8 +47,8 @@ Ces règles encadrent l'implémentation de la [roadmap](plans/roadmap.md). La ro
 
 ## Préférences
 
-- Encapsuler les accès à `localStorage` dans `storage/` ; persister uniquement les espèces actives, leurs volumes et les réglages de l'ambiance.
-- Valider les données lues et revenir aux valeurs par défaut pour les valeurs absentes ou invalides : cinq espèces activées à 40 %, ambiance à 25 %, lecture arrêtée.
+- Encapsuler les accès à `localStorage` dans `storage/` ; persister uniquement les espèces actives, leurs volumes et les réglages des ambiances.
+- Valider les données lues et revenir aux valeurs par défaut pour les valeurs absentes ou invalides : cinq espèces activées à 40 %, brise et feuillage activés à 25 %, quatre autres fonds désactivés à 25 %, lecture arrêtée.
 - Gérer les erreurs de lecture et d'écriture du stockage sans empêcher l'utilisation de l'application.
 - Garder les buffers, les sources et l'état de lecture hors des préférences persistées.
 

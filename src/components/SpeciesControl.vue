@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { ChannelId } from '../types'
+import { isAmbienceId } from '../data/ambiences'
 import { useGarden } from '../composables/useGarden'
 
 const props = defineProps<{ id: ChannelId; name: string; photoUrl?: string }>()
 const { preferences, audio, setChannelEnabled, setChannelVolume, retry } = useGarden()
-const channel = computed(() => props.id === 'ambience' ? preferences.ambience : preferences.species[props.id])
+const channel = computed(() => isAmbienceId(props.id) ? preferences.ambiences[props.id] : preferences.species[props.id])
 const load = computed(() => audio.channels[props.id])
 
 const nameElement = ref<HTMLSpanElement | null>(null)
@@ -118,7 +119,7 @@ onBeforeUnmount(() => {
       </label>
     </div>
     <div class="channel-status" aria-live="polite" aria-atomic="true">
-      <p v-if="load.status === 'loading'">{{ id === 'ambience' ? 'Chargement de l’ambiance…' : 'Chargement du chant…' }}</p>
+      <p v-if="load.status === 'loading'">{{ isAmbienceId(id) ? 'Chargement de l’ambiance…' : 'Chargement du chant…' }}</p>
       <template v-else-if="load.status === 'error'">
         <p class="audio-error">{{ load.message }} ({{ name }})</p>
         <button type="button" class="retry-button" :aria-label="`Réessayer — ${name}`" @click="retry(id)">Réessayer</button>

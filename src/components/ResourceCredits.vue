@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { AssetCredit } from '../types'
 import { speciesCatalog } from '../data/species'
-import { ambienceCredit, gardenCredit } from '../data/credits'
+import { ambienceCatalog } from '../data/ambiences'
+import { gardenCredit } from '../data/credits'
 
 const groups: { name: string; resources: { name: string; credit: AssetCredit }[] }[] = [
   {
@@ -22,8 +23,8 @@ const groups: { name: string; resources: { name: string; credit: AssetCredit }[]
     ),
   },
   {
-    name: 'Ambiance',
-    resources: [{ name: 'Brise et feuillage', credit: ambienceCredit }],
+    name: 'Ambiances',
+    resources: ambienceCatalog.map((ambience) => ({ name: ambience.name, credit: ambience.asset.credit })),
   },
 ]
 </script>

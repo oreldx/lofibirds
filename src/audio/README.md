@@ -33,8 +33,10 @@ calme, 6–12 secondes en phase normale et 2–6 secondes en phase animée.
 ## Sources et transitions
 
 Chaque chant suit le graphe source → enveloppe → panoramique stéréo → gain
-d’espèce → sortie commune. L’ambiance garde son canal et sa boucle avec raccord
-fondu, sans participer à la limite des deux oiseaux.
+d’espèce → sortie commune. Les cinq ambiances ont chacune leur canal et leur
+boucle avec raccord fondu, sans participer à la limite des deux oiseaux. La
+sortie commune applique un gain de 1/8 pour garder une marge lorsque les cinq
+fonds et deux oiseaux jouent ensemble.
 
 Le panoramique vaut `0,6 × (2x − 1)`, avec variation de ±0,05. Le niveau vaut
 `0,85 + 0,15y`, varie de ±5 %, reste plafonné à 1, puis est multiplié par le
@@ -65,6 +67,8 @@ en cours sont mutualisées et les buffers sont réutilisés pendant la session.
 Une réponse tardive ne démarre pas un canal désactivé ou une session en pause.
 Un échec reste limité au canal concerné ; une nouvelle tentative est explicite.
 La destruction libère les sources, les nœuds, la minuterie et le contexte.
+Les quatre nouveaux fonds sont des fichiers AAC locaux ; leur décodage doit être
+vérifié dans Chrome, Firefox et Safari.
 
 Au-delà des 180 secondes préparées, un gel du thread peut créer un silence
 jusqu’au prochain renouvellement. L’anticipation ne garantit pas la lecture

@@ -12,7 +12,8 @@ Karla est servie localement.
 
 Le jardin en pixel art affiche les cinq espèces ; chaque interrupteur contrôle
 la présence de l’oiseau et son chant. Les volumes sont indépendants, avec un
-canal séparé « Brise et feuillage ». Un volume nul conserve l’oiseau visible.
+canaux séparés « Brise et feuillage », « Pluie douce », « Ruisseau », « Rivière »
+et « Vent léger ». Un volume nul conserve l’oiseau visible.
 L’écoute démarre uniquement avec « Écouter le jardin » et s’arrête avec « Pause ».
 Les crédits des illustrations et des sons sont accessibles en bas de page.
 
@@ -56,7 +57,9 @@ réduction des animations arrête le mouvement. Le chant reste indépendant.
 
 Les activations et volumes sont sauvegardés automatiquement dans `localStorage`
 et restaurés à la visite suivante, sans démarrer le son. À la première visite,
-les cinq espèces sont activées à 40 % et l’ambiance à 25 %. Si les données sont
+les cinq espèces sont activées à 40 % et « Brise et feuillage » à 25 %. Les
+quatre autres ambiances sont désactivées, avec un volume préparé à 25 %. Les
+préférences enregistrées sous l’ancienne clé sont ignorées. Si les données sont
 invalides, les champs concernés reprennent leurs valeurs par défaut ; si le
 stockage est indisponible, le jardin reste utilisable avec ses réglages en mémoire.
 
@@ -82,12 +85,12 @@ npm run dev
 | `npm run type-check` | Contrôle TypeScript strict |
 | `npm run build` | Contrôle des types et build statique dans dist/ |
 | `npm run preview` | Prévisualisation du build |
-| `npm test` | Exécution de la suite Vitest, encore à ajouter |
-| `npm run test:watch` | Surveillance des futurs tests |
+| `npm test` | Exécution des tests Vitest |
+| `npm run test:watch` | Tests en mode surveillance |
 
 Vitest cherche `src/**/*.test.ts` dans l’environnement Node. Aucun test métier
 n’est présent pour le moment ; `npm test` signale l’absence de fichiers de test.
-Les smoke tests généraux sont reportés à une prochaine étape.
+Les essais audio dans les navigateurs restent à réaliser.
 La commande `assets:check` est déclarée dans le manifeste, mais son script
 `scripts/check-assets.mjs` reste à ajouter avant de pouvoir l’utiliser.
 
@@ -153,7 +156,7 @@ de réduction des animations et de visibilité que le rouge-gorge.
 ## Architecture
 
 - `src/components/` : interface Vue et présentation des crédits.
-- `src/audio/` : moteur indépendant de Vue, programmation des chants et boucle d’ambiance.
+- `src/audio/` : moteur indépendant de Vue, programmation des chants et boucles des ambiances.
 - `src/composables/` : état partagé, commandes et liaison avec le moteur audio.
 - `src/storage/` : validation et accès protégés aux préférences locales.
 - `src/data/` : espèces, ressources du jardin, crédits et réglages initiaux.

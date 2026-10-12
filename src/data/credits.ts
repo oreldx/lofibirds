@@ -1,4 +1,4 @@
-import type { AssetCredit, SpeciesId } from '../types'
+import type { AmbienceId, AssetCredit, SpeciesId } from '../types'
 
 const publicDomain = {
   author: 'Oona Räisänen (Mysid)',
@@ -92,7 +92,7 @@ export const audioCredits = {
   },
 } satisfies Record<SpeciesId, AssetCredit>
 
-export const ambienceCredit: AssetCredit = {
+const ambienceCredit: AssetCredit = {
   author: 'o_ciz',
   source: 'Wind(leaves) · 475448 — Freesound',
   sourceUrl: 'https://freesound.org/people/o_ciz/sounds/475448/',
@@ -100,3 +100,20 @@ export const ambienceCredit: AssetCredit = {
   licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
   modifications: ['Extrait, volume ajusté et réencodage en MP3'],
 }
+
+const sloCredit: AssetCredit = {
+  author: null,
+  source: 'Slo',
+  sourceUrl: 'https://slonoise.com/',
+  license: '',
+  licenseUrl: null,
+  modifications: [],
+}
+
+export const ambienceCredits = {
+  'brise-feuillage': ambienceCredit,
+  'pluie-douce': { ...sloCredit },
+  'ruisseau': { ...sloCredit },
+  'riviere': { ...sloCredit },
+  'vent-leger': { ...sloCredit },
+} satisfies Record<AmbienceId, AssetCredit>
