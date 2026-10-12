@@ -67,7 +67,13 @@ onUnmounted(() => {
       />
     </template>
     <template v-for="species in speciesCatalog" :key="species.id">
-      <span v-if="preferences.species[species.id].enabled" class="garden-bird" :class="`bird-${species.id}`" aria-hidden="true">
+      <span
+        v-if="preferences.species[species.id].enabled"
+        class="garden-bird"
+        :class="`bird-${species.id}`"
+        :style="{ left: `${species.position.x * 100}%`, top: `${species.position.y * 100}%` }"
+        aria-hidden="true"
+      >
         <RobinSprite v-if="species.id === 'rouge-gorge'" animated />
         <GreatTitSprite v-else-if="species.id === 'mesange-charbonniere'" animated />
         <BlackbirdSprite v-else-if="species.id === 'merle-noir'" animated />

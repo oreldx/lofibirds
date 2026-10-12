@@ -153,8 +153,6 @@ input {
   --bird-shadow-x: 38%;
   --bird-shadow-y: 88%;
   --bird-shadow-width: 42%;
-  left: 34%;
-  top: 74%;
   width: 6%;
 }
 
@@ -163,8 +161,6 @@ input {
   --bird-shadow-y: 99%;
   --bird-shadow-width: 40%;
   --bird-shadow-height: 4%;
-  left: 15%;
-  top: 80%;
   width: 5%;
 }
 
@@ -173,8 +169,6 @@ input {
   --bird-shadow-y: 87%;
   --bird-shadow-width: 32%;
   --bird-shadow-height: 3%;
-  left: 26%;
-  top: 24%;
   width: 6%;
 }
 
@@ -182,16 +176,12 @@ input {
   --bird-shadow-x: 37%;
   --bird-shadow-y: 95%;
   --bird-shadow-width: 40%;
-  left: 77%;
-  top: 80%;
   width: 6%;
 }
 
 .bird-pinson-des-arbres {
   --bird-shadow-x: 57%;
   --bird-shadow-y: 89%;
-  left: 61%;
-  top: 75%;
   width: 5%;
 }
 

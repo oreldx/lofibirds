@@ -16,6 +16,23 @@ canal séparé « Brise et feuillage ». Un volume nul conserve l’oiseau visib
 L’écoute démarre uniquement avec « Écouter le jardin » et s’arrête avec « Pause ».
 Les crédits des illustrations et des sons sont accessibles en bas de page.
 
+Les chants partagent un planificateur avec 180 secondes d’anticipation sur
+l’horloge audio. Deux espèces au maximum chantent ensemble, avec au moins
+deux secondes entre départs. Chaque espèce se repose 8 à 25 secondes après
+un extrait, puis attend son tour si la densité du jardin l’exige. Les phases
+calmes, normales et animées durent chacune 2 à 4 minutes ; elles espacent les
+départs respectivement de 12–20, 6–12 et 2–6 secondes lorsque les oiseaux sont
+disponibles. Chaque changement choisit aléatoirement une autre phase.
+
+La sélection favorise les espèces ayant attendu le plus longtemps et les
+extraits les moins récents, sans répétition immédiate lorsqu’une espèce dispose
+de plusieurs chants. Le catalogue actuel conserve un seul extrait par espèce ;
+les suivants pourront être ajoutés à sa liste `audio`. Les chants ont des
+fondus et de légères variations de niveau et de panoramique liées à la position
+des oiseaux, sans changement de hauteur ou de vitesse. Après une pause, la
+reprise réinitialise la mémoire et commence une nouvelle phase normale, en
+réutilisant les sons déjà décodés. Voir [le moteur audio](src/audio/README.md).
+
 `GardenScene` superpose trois calques animés sur un ciel fixe : nuages en
 12 secondes, arrière-plan en 4 secondes et premier plan en 3 secondes. Chaque
 spritesheet contient 16 frames en grille 4 × 4, parcourues sans interpolation.
@@ -70,6 +87,7 @@ npm run dev
 
 Vitest cherche `src/**/*.test.ts` dans l’environnement Node. Aucun test métier
 n’est présent pour le moment ; `npm test` signale l’absence de fichiers de test.
+Les smoke tests généraux sont reportés à une prochaine étape.
 La commande `assets:check` est déclarée dans le manifeste, mais son script
 `scripts/check-assets.mjs` reste à ajouter avant de pouvoir l’utiliser.
 
