@@ -17,39 +17,29 @@ const aboutOpen = ref(false)
 const aboutTrigger = ref<HTMLButtonElement | null>(null)
 let sceneResizeObserver: ResizeObserver | undefined
 let sceneWidth = 0
-let sceneHeight = 0
 let viewportWidth = 0
-let viewportHeight = 0
 let horizontalPosition = 0.5
-let verticalPosition = 0.5
 
 function restoreScenePosition(): void {
   const viewport = sceneViewport.value
   if (!viewport) return
 
   viewport.scrollLeft = horizontalPosition * Math.max(0, viewport.scrollWidth - viewport.clientWidth)
-  viewport.scrollTop = verticalPosition * Math.max(0, viewport.scrollHeight - viewport.clientHeight)
   sceneWidth = viewport.scrollWidth
-  sceneHeight = viewport.scrollHeight
   viewportWidth = viewport.clientWidth
-  viewportHeight = viewport.clientHeight
 }
 
 function rememberScenePosition(): void {
   const viewport = sceneViewport.value
-  if (!viewport || viewport.scrollWidth !== sceneWidth || viewport.scrollHeight !== sceneHeight ||
-    viewport.clientWidth !== viewportWidth || viewport.clientHeight !== viewportHeight) return
+  if (!viewport || viewport.scrollWidth !== sceneWidth || viewport.clientWidth !== viewportWidth) return
 
   const horizontalRange = viewport.scrollWidth - viewport.clientWidth
-  const verticalRange = viewport.scrollHeight - viewport.clientHeight
   if (horizontalRange > 0) horizontalPosition = viewport.scrollLeft / horizontalRange
-  if (verticalRange > 0) verticalPosition = viewport.scrollTop / verticalRange
 }
 
 function handleSceneWheel(event: WheelEvent): void {
   const viewport = sceneViewport.value
-  if (!viewport || viewport.scrollWidth - viewport.clientWidth <=
-    viewport.scrollHeight - viewport.clientHeight ||
+  if (!viewport || viewport.scrollWidth <= viewport.clientWidth ||
     Math.abs(event.deltaX) > Math.abs(event.deltaY) * 0.25) return
 
   const distance = event.deltaY * (event.deltaMode === WheelEvent.DOM_DELTA_LINE
@@ -102,7 +92,7 @@ onBeforeUnmount(() => {
 
 <template>
   <main class="garden-app" :class="{ 'garden-drawer-open': uiVisible && panelOpen }">
-    <div ref="sceneViewport" class="garden-viewport" role="region" aria-label="Jardin défilable" tabindex="0" @scroll="rememberScenePosition" @wheel="handleSceneWheel">
+    <div ref="sceneViewport" class="garden-viewport" role="region" aria-label="Jardin défilable horizontalement" tabindex="0" @scroll="rememberScenePosition" @wheel="handleSceneWheel">
       <div ref="sceneContent" class="garden-scroll-content">
         <GardenScene />
         <button

@@ -46,7 +46,8 @@ input {
 .garden-viewport {
   position: absolute;
   inset: 0;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-color: var(--stone) var(--oat);
 }
 
@@ -54,7 +55,8 @@ input {
   position: relative;
   width: max(100%, calc(100vh * 1672 / 941));
   width: max(100%, calc(100dvh * 1672 / 941));
-  aspect-ratio: 1672 / 941;
+  height: 100%;
+  overflow: hidden;
 }
 
 .page-header,
@@ -102,11 +104,13 @@ input {
 
 .garden-scene {
   position: absolute;
-  inset: 0;
+  inset: 50% 0 auto;
   z-index: 0;
+  aspect-ratio: 1672 / 941;
   margin: 0;
   overflow: hidden;
   background: var(--sage);
+  transform: translateY(-50%);
 }
 
 .garden-surface {
