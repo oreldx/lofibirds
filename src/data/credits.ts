@@ -21,6 +21,15 @@ export const gardenCredit: AssetCredit = {
   ],
 }
 
+export const faviconCredit: AssetCredit = {
+  author: null,
+  source: 'Visuel fourni avec le projet ; exports RealFaviconGenerator',
+  sourceUrl: null,
+  license: 'Licence du visuel original non renseignée',
+  licenseUrl: null,
+  modifications: ['Fichiers déplacés vers public/', 'Nom et couleurs du manifeste adaptés à Lofibirds'],
+}
+
 export const spriteCredit: AssetCredit = {
   author: null,
   source: 'Sprites créés avec OpenAI imagegen',

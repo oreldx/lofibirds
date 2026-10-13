@@ -118,7 +118,7 @@ Les préférences de l’étape 4 sont sauvegardées automatiquement et restaur�
 sans démarrer l’écoute. Les commandes natives disposent de libellés explicites
 et de focus visibles ; les animations des oiseaux sont supprimées lorsque la
 réduction des animations est demandée. Les crédits repliables et les métadonnées
-sont en place. Le favicon est reporté.
+sont en place. Le favicon et son manifeste sont intégrés.
 
 Les tests de comportement restent à ajouter. Les vérifications navigateur,
 l’écoute prolongée, les mesures, la vérification finale des droits et la
