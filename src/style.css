@@ -755,68 +755,13 @@ input {
 }
 
 .credits {
-  margin-top: 2rem;
+  margin: 1.5rem 0 0;
   border-top: 1px solid var(--border);
-  padding-top: 0.75rem;
+  padding-top: 1rem;
+  color: var(--stone);
   font-size: 0.875rem;
   line-height: 1.6;
   overflow-wrap: anywhere;
-}
-
-.credits summary {
-  display: list-item;
-  width: fit-content;
-  min-height: 44px;
-  padding: 0.5rem 0;
-  cursor: pointer;
-  color: var(--forest);
-  font-weight: 600;
-}
-
-.credits-intro {
-  margin: 0.75rem 0 1.25rem;
-  color: var(--stone);
-}
-
-.credit-group+.credit-group {
-  margin-top: 1.5rem;
-}
-
-.credit-group h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1rem;
-}
-
-.credit-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: 1rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.credit-list li {
-  padding: 1rem;
-  border-left: 2px solid var(--border);
-  background: var(--oat);
-}
-
-.credit-list h3 {
-  font-size: 1rem;
-}
-
-.credit-author {
-  font-weight: 600;
-}
-
-.credit-adaptations {
-  color: var(--stone);
-}
-
-.credit-list h3,
-.credit-list p {
-  margin: 0 0 0.5rem;
 }
 
 a {

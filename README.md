@@ -15,7 +15,10 @@ la présence de l’oiseau et son chant. Les volumes sont indépendants, avec un
 canaux séparés « Brise et feuillage », « Pluie douce », « Ruisseau », « Rivière »
 et « Vent léger ». Un volume nul conserve l’oiseau visible.
 L’écoute démarre uniquement avec « Écouter le jardin » et s’arrête avec « Pause ».
-Les crédits des illustrations et des sons sont accessibles en bas de page.
+Les crédits dans « À propos » se limitent à une phrase avec les liens vers les
+sources et une mention des sprites créés à partir d’une base générée avec OpenAI,
+puis améliorés. Les informations
+complètes de provenance, de licence et de modification restent dans `src/data/credits.ts`.
 
 Les chants partagent un planificateur avec 180 secondes d’anticipation sur
 l’horloge audio. Deux espèces au maximum chantent ensemble, avec au moins
