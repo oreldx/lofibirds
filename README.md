@@ -57,7 +57,7 @@ réduction des animations arrête le mouvement. Le chant reste indépendant.
 
 Les activations et volumes sont sauvegardés automatiquement dans `localStorage`
 et restaurés à la visite suivante, sans démarrer le son. À la première visite,
-les cinq espèces sont activées à 40 % et « Brise et feuillage » à 25 %. Les
+les cinq espèces sont activées à 40 % et « Vent léger » à 25 %. Les
 quatre autres ambiances sont désactivées, avec un volume préparé à 25 %. Les
 préférences enregistrées sous l’ancienne clé sont ignorées. Si les données sont
 invalides, les champs concernés reprennent leurs valeurs par défaut ; si le
@@ -68,6 +68,33 @@ panneau se replie sans masquer l’action d’écoute. La préférence de réduc
 des animations désactive les mouvements des oiseaux et les transitions.
 Le favicon est reporté. La validation navigateur approfondie et la publication
 restent à l’[étape 5 de la roadmap](.ai/plans/roadmap.md).
+
+## Sources des ambiances
+
+Les quatre ambiances additionnelles utilisent les MP3 complets de LaSonothèque,
+servis localement, de Joseph SARDIN sous CC0 1.0 :
+
+| Ambiance | Enregistrement source |
+| --- | --- |
+| Brise et feuillage | [Vent, herbes hautes · 0908](https://lasonotheque.org/vent-dans-les-herbes-hautes-s0908.html) |
+| Ruisseau | [Cours d’eau 5.2 · 3137](https://lasonotheque.org/cours-d-eau-5-2-s3137.html) |
+| Rivière | [Petit ruisseau #4 · 1354](https://lasonotheque.org/petit-ruisseau-4-s1354.html) |
+| Pluie douce | [Pluie d’été sur terrasse · 1019](https://lasonotheque.org/pluie-d-ete-sur-terrasse-s1019.html) |
+
+Les fichiers sont uniquement renommés. Le moteur réalise un raccord avec fondu
+croisé d’une seconde à la lecture, sans modifier la vitesse ou la hauteur.
+Les conditions d’utilisation sont décrites sur la
+[page des droits de LaSonothèque](https://lasonotheque.org/licences.html).
+
+Le son Freesound « Wind(leaves) » est affiché sous le libellé « Vent léger ».
+Les identifiants internes des deux ambiances restent inchangés pour conserver
+les réglages enregistrés associés à chaque son.
+
+Les cinq cartes d’environnement utilisent les photos Pixabay fournies pour
+le projet, importées localement depuis `src/assets/images/`, sous la
+[Pixabay Content License](https://pixabay.com/service/license-summary/).
+Les originaux sont conservés sans modification ; seul l’affichage est recadré,
+comme pour les espèces. Les crédits indiquent Pixabay comme source.
 
 ## Installation et commandes
 

@@ -80,7 +80,7 @@ function navigateTabs(event: KeyboardEvent): void {
     <div id="environment-panel" v-show="activeGroup === 'environment'" role="tabpanel" aria-labelledby="environment-tab" class="sound-panel">
       <ul class="species-list" aria-label="Sons de l’environnement">
         <li v-for="ambience in ambienceCatalog" :key="ambience.id">
-          <SpeciesControl :id="ambience.id" :name="ambience.name" />
+          <SpeciesControl :id="ambience.id" :name="ambience.name" :photo-url="ambience.photo.url" />
         </li>
       </ul>
     </div>
