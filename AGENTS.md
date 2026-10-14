@@ -1,31 +1,45 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## Project Context
 
-This project is a planned French-language bird-garden application using Vue 3, strict TypeScript, and Vite. Implementation has not started. Read `.ai/plans/roadmap.md` for product requirements and `.ai/rules.md` for technical conventions.
+Lofibirds is a French-language bird-garden application implemented with Vue 3,
+strict TypeScript, Vite, and Web Audio. Production is a static build.
 
-Organize future source code by responsibility: `src/components/` for UI, `src/audio/` for the framework-independent audio engine, `src/composables/` for reactive integration, `src/data/` for species and credits, and `src/storage/` for preferences. Import images and audio through Vite; reserve `public/` for files requiring stable names.
+Read these documents before changing the relevant subsystem:
 
-## Build, Test, and Development Commands
+- [Technical rules](.ai/rules.md): coding conventions, constraints, and validation requirements.
+- [Architecture](.ai/architecture.md): module responsibilities and runtime contracts.
+- [Art direction](.ai/direction-artistique.md): visual and editorial guidelines.
+- [Audio engine](src/audio/README.md): scheduling, loading, and session behavior.
 
-No package manifest or runnable commands exist yet. When scaffolding the application, document the actual commands for local development, TypeScript checking, production builds, and tests. Run the TypeScript check and production build before delivering implementation changes.
+## Commands and Current Limitations
 
-## Coding Style & Naming Conventions
+Use the Node.js version range in `package.json` and install with `npm ci`.
+`npm run dev` starts Vite; `npm run preview` previews the production build.
+Run `npm run type-check` and `npm run build` before delivering implementation changes.
 
-Use Vue Composition API with `<script setup lang="ts">` and strict TypeScript. Avoid `any` and unnecessary abstractions. Keep the audio engine independent of Vue and the DOM, with one engine and one `AudioContext` per session.
+Vitest is configured for `src/**/*.test.ts` in Node. Use `npm test` for a single
+run or `npm run test:watch` during development. No test files currently exist;
+`npm test` exits unsuccessfully until tests are added. No coverage threshold,
+formatter, or linter is configured.
 
-Use descriptive names and consistent indentation. No formatter or linter is configured yet. Do not add a router, Pinia, backend, or service worker for the initial scope.
+`npm run assets:check` is declared but unusable: `scripts/check-assets.mjs` is
+absent. Do not report it as a passing check or recommend it until restored.
+Browser validation of audio and accessibility remains to be performed; report
+only checks actually completed.
 
-## Testing Guidelines
+## Documentation and Assets
 
-No testing framework or coverage threshold is established. Add focused behavior tests for scheduling, pause/resume, channel disabling, late or failed loading, and invalid or unavailable preferences.
+Keep the root README focused on presentation and getting started. Put agent
+instructions here, technical constraints in `.ai/rules.md`, runtime context in
+`.ai/architecture.md`, and detailed subsystem behavior beside its implementation.
+Avoid duplicating constants, credits, or development history across documents.
 
-Verify audio transitions, autoplay restrictions, and hidden-tab continuity in Chrome, Firefox, and Safari desktop. Check mobile layout, keyboard navigation, and reduced-motion behavior.
+Record asset authors, sources, licenses, and modifications in `src/data/credits.ts`.
+Preserve existing unknown-license notices; do not infer missing permissions.
 
-## Commit & Pull Request Guidelines
+## Commits and Pull Requests
 
-No Git history is available to establish commit conventions. Use concise, imperative commit subjects. Describe changes, relevant roadmap steps, and validation results in pull requests. Include screenshots for visual changes and document browser checks for audio changes.
-
-## Assets & Configuration
-
-Verify and record each asset’s author, source, license, and modifications. Serve assets locally. Persist preferences only; restoring them must never start playback automatically.
+Use concise, imperative commit subjects. Describe the resulting behavior and
+validation results in pull requests. Include screenshots for visual changes
+and document browser checks for audio changes.

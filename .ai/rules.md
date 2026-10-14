@@ -1,6 +1,8 @@
 # Règles techniques — Lofibirds
 
-Ces règles encadrent l'implémentation de la [roadmap](plans/roadmap.md). La roadmap définit le comportement produit ; ce document définit les conventions techniques.
+Ce document définit les contraintes et conventions techniques. Voir
+l'[architecture](architecture.md) pour le fonctionnement actuel et
+[AGENTS.md](../AGENTS.md) pour les commandes et les consignes de contribution.
 
 ## Stack et architecture
 
@@ -48,7 +50,7 @@ Ces règles encadrent l'implémentation de la [roadmap](plans/roadmap.md). La ro
 ## Préférences
 
 - Encapsuler les accès à `localStorage` dans `storage/` ; persister uniquement les espèces actives, leurs volumes et les réglages des ambiances.
-- Valider les données lues et revenir aux valeurs par défaut pour les valeurs absentes ou invalides : cinq espèces activées à 40 %, brise et feuillage activés à 25 %, quatre autres fonds désactivés à 25 %, lecture arrêtée.
+- Valider les données lues et revenir aux valeurs par défaut définies dans `src/data/defaults.ts` : cinq espèces activées à 40 %, « Vent léger » activé à 25 %, quatre autres fonds désactivés à 25 %, lecture arrêtée.
 - Gérer les erreurs de lecture et d'écriture du stockage sans empêcher l'utilisation de l'application.
 - Garder les buffers, les sources et l'état de lecture hors des préférences persistées.
 

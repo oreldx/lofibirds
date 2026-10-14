@@ -7,7 +7,7 @@ et discrète encadre un paysage vivant en pixel art. La sensation recherchée es
 celle d'un moment près d'une fenêtre ouverte : lumière douce, présence des
 oiseaux, liberté de composer son écoute.
 
-Cette proposition décline la référence
+Cette direction décline la référence
 [Scandinavian Modern de daisyUI](https://trends.daisyui.com/trend/scandinavian-modern/) :
 neutres lumineux, accents naturels, simplicité fonctionnelle, marges généreuses,
 typographie humaniste et angles légèrement adoucis. La référence guide le style ;
@@ -54,9 +54,9 @@ sur sa couleur.
 
 ## Typographie
 
-**Karla** est la piste principale pour les textes et commandes, avec
-`system-ui, sans-serif` en repli. Utiliser les graisses 400 et 600 ; héberger les
-fichiers localement et enregistrer leur licence avant intégration.
+**Karla** est la police des textes et commandes, servie localement, avec
+`system-ui, sans-serif` en repli. Utiliser les graisses 400 et 600 et documenter
+la licence de tout nouveau fichier de police.
 
 Pour une touche éditoriale, conserver **Georgia** sur le titre d'accueil et,
 éventuellement, le nom du projet. Ne pas multiplier les titres en serif.
@@ -69,10 +69,10 @@ Pour une touche éditoriale, conserver **Georgia** sur le titre d'accueil et,
 
 ## Composition
 
-Sur ordinateur, une courte introduction précède une composition asymétrique :
-jardin à gauche, panneau compact à droite. Viser un panneau de 300–340 px, un
-écart de 24 px et des marges extérieures de 32–48 px lorsque l'espace le permet.
-Limiter le contenu à environ 1440 px pour conserver une lecture confortable.
+Le jardin occupe la zone principale ; un panneau de réglages peut être ouvert
+à droite sur ordinateur et dans une fenêtre modale sur mobile. Garder ce panneau
+compact et les commandes lisibles, avec des espacements généreux lorsque
+l'espace le permet.
 
 Le paysage garde son ratio d'origine, proche de 16:9. Ne pas recadrer au point
 de masquer un oiseau ou son emplacement. Le cadre utilise un rayon de 8 px et
@@ -83,17 +83,17 @@ Sur mobile, placer le jardin avant les réglages, avec des marges de 16 px. Le
 panneau peut être replié, tout en gardant la commande globale d'écoute accessible.
 À fort zoom ou quand les textes ne tiennent plus, passer à une seule colonne.
 
-Les crédits restent en bas de page, repliables, avec une présentation simple.
+Les crédits sont accessibles dans la fenêtre « À propos », avec une présentation simple.
 L'écran principal sert à observer et écouter, avec une introduction courte.
 
 ## Commandes et états
 
 - Une seule action principale : « Écouter le jardin », puis « Pause » pendant
   la lecture. Bouton vert forêt, texte clair, icône simple accompagnée du texte.
-- Panneau « Les habitants » : cinq lignes séparées par des filets, chacune avec
-  sprite, nom, interrupteur et volume. Éviter une carte par oiseau.
-- Ambiance « Brise et feuillage » : groupe séparé après les espèces, avec les
-  mêmes conventions de commande.
+- Panneau « Les sons du jardin » : onglet « Espèces » pour les cinq oiseaux,
+  avec photo, nom, interrupteur et volume.
+- Onglet « Environnement » : « Vent léger », « Pluie douce », « Ruisseau »,
+  « Rivière » et « Brise et feuillage », avec les mêmes conventions de commande.
 - Curseurs fins, poignée clairement visible, valeur accessible. Une cible
   interactive d'au moins 44 × 44 px peut entourer un élément visuel plus petit.
 - Espèce désactivée : interrupteur explicite et volume indisponible ; son nom
@@ -123,21 +123,20 @@ animations ambiantes et les mouvements de transition.
 
 ## Ton rédactionnel
 
-Français simple, accueillant et concret. Utiliser « Les habitants », « Brise et
-feuillage », « Écouter le jardin », « Pause » et « Crédits ». Conserver l'accroche
+Français simple, accueillant et concret. Utiliser « Les sons du jardin », « Espèces »,
+« Environnement », « Écouter le jardin », « Pause » et « À propos ». Conserver l'accroche
 actuelle : « Un jardin, un instant pour soi. »
 
 Éviter les promesses thérapeutiques, les indicateurs de productivité et le
 vocabulaire technique dans les commandes.
 
-## Application au socle actuel
+## Évolution et validation visuelle
 
-La page actuelle possède déjà un fond clair, un accent vert et un paysage
-dominant. La prochaine passe visuelle doit harmoniser la typographie, introduire
-les couleurs ci-dessus comme tokens, ajuster les espacements et unifier les
-cadres. L'ajout des commandes audio suit la roadmap fonctionnelle.
+La typographie locale, les couleurs, les cadres et les commandes audio sont
+déjà intégrés. Cette charte guide les évolutions visuelles ; les valeurs
+effectivement utilisées restent dans les styles et les composants.
 
-Cette charte est une proposition de référence pour la prochaine maquette ; elle
-ne constitue pas une validation du rendu final. Vérifier ensuite la composition
-avec les assets existants sur ordinateur et mobile, les contrastes, le clavier,
-le zoom à 200 % et la réduction des animations.
+Lors d'une modification visuelle, vérifier la composition avec les assets
+existants sur ordinateur et mobile, les contrastes, le clavier, le zoom à 200 %
+et la réduction des animations. La charte ne constitue pas une validation
+du rendu final.

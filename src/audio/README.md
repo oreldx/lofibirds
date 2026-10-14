@@ -67,10 +67,10 @@ en cours sont mutualisées et les buffers sont réutilisés pendant la session.
 Une réponse tardive ne démarre pas un canal désactivé ou une session en pause.
 Un échec reste limité au canal concerné ; une nouvelle tentative est explicite.
 La destruction libère les sources, les nœuds, la minuterie et le contexte.
-Les quatre nouveaux fonds sont des fichiers AAC locaux ; leur décodage doit être
+Les chants et les ambiances sont des fichiers MP3 locaux ; leur décodage doit être
 vérifié dans Chrome, Firefox et Safari.
 
 Au-delà des 180 secondes préparées, un gel du thread peut créer un silence
 jusqu’au prochain renouvellement. L’anticipation ne garantit pas la lecture
-pendant une suspension du navigateur ou du système. L’écoute avec les futurs
-assets et les smoke tests généraux restent à réaliser ultérieurement.
+pendant une suspension du navigateur ou du système. Les vérifications dans les
+navigateurs réels sont décrites dans les [règles techniques](../../.ai/rules.md#validation).
