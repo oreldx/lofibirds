@@ -1,7 +1,7 @@
 import { reactive, readonly } from 'vue'
 import { loadPreferences, savePreferences } from '../storage/preferences'
 import { speciesCatalog } from '../data/species'
-import { ambienceAsset } from '../data/resources'
+import { ambienceCatalog, isAmbienceId } from '../data/ambiences'
 import { GardenAudioEngine } from '../audio/GardenAudioEngine'
 import type { AudioChannelAssets, AudioSnapshot } from '../audio/GardenAudioEngine'
 import type { ChannelId, ChannelLoadState, SpeciesId } from '../types'
@@ -10,22 +10,24 @@ const preferences = reactive(loadPreferences())
 const gardenPreferences = readonly(preferences)
 const audio = reactive<AudioSnapshot>({
   playback: 'stopped', error: null,
-  channels: Object.fromEntries([...speciesCatalog.map((species) => species.id), 'ambience'].map((id) => [id, { status: 'idle' }])) as Record<ChannelId, ChannelLoadState>,
+  channels: Object.fromEntries([...speciesCatalog.map((species) => species.id), ...ambienceCatalog.map((ambience) => ambience.id)].map((id) => [id, { status: 'idle' }])) as Record<ChannelId, ChannelLoadState>,
 })
 const audioState = readonly(audio)
 const engine = new GardenAudioEngine(
   Object.fromEntries([
     ...speciesCatalog.map((species) => [species.id, {
-      urls: species.audio.map((asset) => asset.url), position: species.position,
+      kind: 'bird', urls: species.audio.map((asset) => asset.url), position: species.position,
     }]),
-    ['ambience', { urls: [ambienceAsset.url] }],
+    ...ambienceCatalog.map((ambience) => [ambience.id, {
+      kind: 'ambience', urls: [ambience.asset.url],
+    }]),
   ]) as Record<ChannelId, AudioChannelAssets>,
   preferences,
   (snapshot) => Object.assign(audio, snapshot),
 )
 
 function settings(id: ChannelId) {
-  return id === 'ambience' ? preferences.ambience : preferences.species[id]
+  return isAmbienceId(id) ? preferences.ambiences[id] : preferences.species[id]
 }
 
 function setChannelEnabled(id: ChannelId, enabled: boolean): void {

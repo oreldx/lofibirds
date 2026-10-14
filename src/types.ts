@@ -5,6 +5,13 @@ export type SpeciesId =
   | 'moineau-domestique'
   | 'pinson-des-arbres'
 
+export type AmbienceId =
+  | 'brise-feuillage'
+  | 'pluie-douce'
+  | 'ruisseau'
+  | 'riviere'
+  | 'vent-leger'
+
 export interface ChannelSettings {
   enabled: boolean
   /** Gain normalisé entre 0 et 1. */
@@ -13,10 +20,10 @@ export interface ChannelSettings {
 
 export interface GardenPreferences {
   species: Record<SpeciesId, ChannelSettings>
-  ambience: ChannelSettings
+  ambiences: Record<AmbienceId, ChannelSettings>
 }
 
-export type ChannelId = SpeciesId | 'ambience'
+export type ChannelId = SpeciesId | AmbienceId
 
 export type PlaybackState = 'stopped' | 'starting' | 'playing' | 'paused' | 'interrupted'
 
@@ -36,7 +43,7 @@ export interface AssetCredit {
   modifications: string[]
 }
 
-/** Une ressource intégrée doit posséder une URL locale importée et des crédits vérifiés. */
+/** Ressource locale importée avec ses informations de provenance et de crédit. */
 export interface CreditedAsset {
   url: string
   credit: AssetCredit

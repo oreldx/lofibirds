@@ -9,7 +9,13 @@ export function createDefaultPreferences(): GardenPreferences {
       'moineau-domestique': { enabled: true, volume: 0.4 },
       'pinson-des-arbres': { enabled: true, volume: 0.4 },
     },
-    ambience: { enabled: true, volume: 0.25 },
+    ambiences: {
+      'brise-feuillage': { enabled: true, volume: 0.25 },
+      'pluie-douce': { enabled: false, volume: 0.25 },
+      'ruisseau': { enabled: false, volume: 0.25 },
+      'riviere': { enabled: false, volume: 0.25 },
+      'vent-leger': { enabled: false, volume: 0.25 },
+    },
   }
 }
 

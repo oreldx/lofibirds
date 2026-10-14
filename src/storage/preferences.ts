@@ -1,7 +1,7 @@
 import { createDefaultPreferences } from '../data/defaults'
-import type { ChannelSettings, GardenPreferences, SpeciesId } from '../types'
+import type { AmbienceId, ChannelSettings, GardenPreferences, SpeciesId } from '../types'
 
-export const PREFERENCES_KEY = 'lofibirds.preferences.v1'
+export const PREFERENCES_KEY = 'lofibirds.preferences.v2'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -24,7 +24,11 @@ function validatePreferences(value: unknown): GardenPreferences {
       defaults.species[id] = validateChannel(value.species[id], defaults.species[id])
     }
   }
-  defaults.ambience = validateChannel(value.ambience, defaults.ambience)
+  if (isRecord(value.ambiences)) {
+    for (const id of Object.keys(defaults.ambiences) as AmbienceId[]) {
+      defaults.ambiences[id] = validateChannel(value.ambiences[id], defaults.ambiences[id])
+    }
+  }
   return defaults
 }
 

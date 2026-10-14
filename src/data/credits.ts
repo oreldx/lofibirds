@@ -1,4 +1,4 @@
-import type { AssetCredit, SpeciesId } from '../types'
+import type { AmbienceId, AssetCredit, SpeciesId } from '../types'
 
 const publicDomain = {
   author: 'Oona Räisänen (Mysid)',
@@ -46,6 +46,15 @@ export const speciesPhotoCredit: AssetCredit = {
   license: 'CC BY-NC-ND 4.0',
   licenseUrl: 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
   modifications: ['Fichiers renommés selon les espèces', 'Recadrage à l’affichage dans les cartes ; fichiers originaux inchangés'],
+}
+
+export const ambiencePhotoCredit: AssetCredit = {
+  author: null,
+  source: 'Pixabay',
+  sourceUrl: 'https://pixabay.com/',
+  license: 'Pixabay Content License',
+  licenseUrl: 'https://pixabay.com/service/license-summary/',
+  modifications: ['Fichiers renommés selon les ambiances', 'Recadrage à l’affichage dans les cartes ; fichiers originaux inchangés'],
 }
 
 export const robinSpritesheetCredit: AssetCredit = {
@@ -101,7 +110,7 @@ export const audioCredits = {
   },
 } satisfies Record<SpeciesId, AssetCredit>
 
-export const ambienceCredit: AssetCredit = {
+const ambienceCredit: AssetCredit = {
   author: 'o_ciz',
   source: 'Wind(leaves) · 475448 — Freesound',
   sourceUrl: 'https://freesound.org/people/o_ciz/sounds/475448/',
@@ -109,3 +118,34 @@ export const ambienceCredit: AssetCredit = {
   licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
   modifications: ['Extrait, volume ajusté et réencodage en MP3'],
 }
+
+const sonothequeCredit = {
+  author: 'Joseph SARDIN',
+  license: 'CC0 1.0',
+  licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+  modifications: ['Fichier MP3 original renommé ; raccord avec fondu croisé d’une seconde à la lecture'],
+}
+
+export const ambienceCredits = {
+  'brise-feuillage': ambienceCredit,
+  'pluie-douce': {
+    ...sonothequeCredit,
+    source: 'Pluie d’été sur terrasse · 1019 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/pluie-d-ete-sur-terrasse-s1019.html',
+  },
+  'ruisseau': {
+    ...sonothequeCredit,
+    source: 'Cours d’eau 5.2 · 3137 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/cours-d-eau-5-2-s3137.html',
+  },
+  'riviere': {
+    ...sonothequeCredit,
+    source: 'Petit ruisseau #4 · 1354 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/petit-ruisseau-4-s1354.html',
+  },
+  'vent-leger': {
+    ...sonothequeCredit,
+    source: 'Vent, herbes hautes · 0908 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/vent-dans-les-herbes-hautes-s0908.html',
+  },
+} satisfies Record<AmbienceId, AssetCredit>

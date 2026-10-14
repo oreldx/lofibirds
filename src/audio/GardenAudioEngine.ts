@@ -1,4 +1,4 @@
-import type { ChannelId, ChannelLoadState, ChannelSettings, GardenPreferences, PlaybackState, ScenePosition } from '../types'
+import type { AmbienceId, ChannelId, ChannelLoadState, ChannelSettings, GardenPreferences, PlaybackState, ScenePosition, SpeciesId } from '../types'
 import { createAmbienceLoop } from './ambience'
 import { BirdScheduler } from './BirdScheduler'
 import type { BirdEvent, SchedulableBird } from './BirdScheduler'
@@ -6,6 +6,7 @@ import type { BirdEvent, SchedulableBird } from './BirdScheduler'
 const FADE = 0.1
 
 export interface AudioChannelAssets {
+  kind: 'bird' | 'ambience'
   urls: readonly string[]
   position?: ScenePosition
 }
@@ -21,6 +22,7 @@ interface SourceNodes {
 
 interface Channel {
   id: ChannelId
+  kind: 'bird' | 'ambience'
   urls: readonly string[]
   position: ScenePosition
   settings: ChannelSettings
@@ -78,8 +80,8 @@ export class GardenAudioEngine {
   ) {
     this.scheduler = new BirdScheduler(dependencies.random)
     this.channels = (Object.entries(assets) as [ChannelId, AudioChannelAssets][]).map(([id, asset]) => ({
-      id, urls: asset.urls, position: asset.position ?? { x: 0.5, y: 0.5 },
-      settings: { ...(id === 'ambience' ? preferences.ambience : preferences.species[id]) },
+      id, kind: asset.kind, urls: asset.urls, position: asset.position ?? { x: 0.5, y: 0.5 },
+      settings: { ...(asset.kind === 'ambience' ? preferences.ambiences[id as AmbienceId] : preferences.species[id as SpeciesId]) },
       load: { status: 'idle' }, sources: new Map(), generation: 0,
     }))
     this.notify()
@@ -131,7 +133,7 @@ export class GardenAudioEngine {
       channel.generation++
       if (!settings.enabled) this.stopChannel(channel, true)
       else if (this.playback === 'playing') this.activate(channel)
-      if (id !== 'ambience') this.replanBirds()
+      if (channel.kind === 'bird') this.replanBirds()
     } else if (channel.gain && this.context) {
       this.ramp(channel.gain.gain, settings.enabled ? channel.settings.volume : 0)
     }
@@ -191,8 +193,8 @@ export class GardenAudioEngine {
     const context = this.dependencies.createContext()
     this.context = context
     this.output = context.createGain()
-    // Marge pour six canaux à 100 %, même si leurs crêtes coïncident.
-    this.output.gain.value = 1 / this.channels.length
+    // Au plus cinq ambiances et deux oiseaux simultanés, avec marge de sortie.
+    this.output.gain.value = 1 / 8
     this.output.connect(context.destination)
     for (const channel of this.channels) {
       channel.gain = context.createGain()
@@ -231,7 +233,7 @@ export class GardenAudioEngine {
     void this.loadChannel(channel).then(() => {
       if (this.disposed || this.playback !== 'playing' || !channel.settings.enabled || generation !== channel.generation || !channel.buffers) return
       this.ramp(channel.gain!.gain, channel.settings.volume)
-      if (channel.id === 'ambience') {
+      if (channel.kind === 'ambience') {
         if (channel.sources.size > 0) return
         this.startSource(channel, channel.buffers[0]!, this.context!.currentTime + FADE, true)
       } else {
@@ -251,11 +253,11 @@ export class GardenAudioEngine {
         const context = this.context!
         const buffers = await Promise.all(channel.urls.map((url) => this.loadBuffer(url, context)))
         if (this.disposed) return
-        channel.buffers = channel.id === 'ambience' ? [createAmbienceLoop(context, buffers[0]!)] : buffers
+        channel.buffers = channel.kind === 'ambience' ? [createAmbienceLoop(context, buffers[0]!)] : buffers
         channel.load = { status: 'ready' }
       } catch {
         if (this.disposed) return
-        channel.load = { status: 'error', message: channel.id === 'ambience' ? 'L’ambiance n’a pas pu être chargée.' : 'Le chant n’a pas pu être chargé.' }
+        channel.load = { status: 'error', message: channel.kind === 'ambience' ? 'L’ambiance n’a pas pu être chargée.' : 'Le chant n’a pas pu être chargé.' }
       } finally {
         channel.pending = undefined
         this.notify()
@@ -290,8 +292,8 @@ export class GardenAudioEngine {
     }
     const birds: SchedulableBird[] = []
     for (const channel of this.channels) {
-      if (channel.id !== 'ambience' && channel.settings.enabled && channel.buffers) {
-        birds.push({ id: channel.id, durations: channel.buffers.map((buffer) => buffer.duration), position: channel.position })
+      if (channel.kind === 'bird' && channel.settings.enabled && channel.buffers) {
+        birds.push({ id: channel.id as SpeciesId, durations: channel.buffers.map((buffer) => buffer.duration), position: channel.position })
       }
     }
     for (const event of this.scheduler.extend(now, birds)) {
@@ -305,7 +307,7 @@ export class GardenAudioEngine {
     const now = this.context.currentTime
     this.scheduler.replan(now)
     for (const [source, { channel, nodes }] of this.allSources) {
-      if (channel.id !== 'ambience' && nodes.start > now) {
+      if (channel.kind === 'bird' && nodes.start > now) {
         source.stop(now)
         this.releaseSource(channel, source, nodes)
       }
@@ -370,7 +372,7 @@ export class GardenAudioEngine {
     const context = this.context
     if (context && channel.gain) {
       const stopTime = context.currentTime + (fade && context.state === 'running' ? FADE : 0)
-      if (channel.id !== 'ambience') this.scheduler.stopSpecies(channel.id, context.currentTime, stopTime)
+      if (channel.kind === 'bird') this.scheduler.stopSpecies(channel.id as SpeciesId, context.currentTime, stopTime)
       if (fade) this.ramp(channel.gain.gain, 0)
       else {
         channel.gain.gain.cancelScheduledValues(context.currentTime)

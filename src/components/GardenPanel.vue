@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { speciesCatalog } from '../data/species'
+import { ambienceCatalog } from '../data/ambiences'
 import SpeciesControl from './SpeciesControl.vue'
 
 const props = defineProps<{ open: boolean; isMobile: boolean }>()
@@ -78,7 +79,9 @@ function navigateTabs(event: KeyboardEvent): void {
     </div>
     <div id="environment-panel" v-show="activeGroup === 'environment'" role="tabpanel" aria-labelledby="environment-tab" class="sound-panel">
       <ul class="species-list" aria-label="Sons de l’environnement">
-        <li><SpeciesControl id="ambience" name="Brise et feuillage" /></li>
+        <li v-for="ambience in ambienceCatalog" :key="ambience.id">
+          <SpeciesControl :id="ambience.id" :name="ambience.name" :photo-url="ambience.photo.url" />
+        </li>
       </ul>
     </div>
     </div>

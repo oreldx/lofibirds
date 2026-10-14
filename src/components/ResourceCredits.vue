@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { AssetCredit } from '../types'
 import { speciesCatalog } from '../data/species'
-import { ambienceCredit, faviconCredit, gardenCredit } from '../data/credits'
+import { ambienceCatalog } from '../data/ambiences'
+import { faviconCredit, gardenCredit } from '../data/credits'
 
 const groups: { name: string; resources: { name: string; credit: AssetCredit }[] }[] = [
   {
@@ -14,7 +15,10 @@ const groups: { name: string; resources: { name: string; credit: AssetCredit }[]
   },
   {
     name: 'Photographies',
-    resources: speciesCatalog.map((species) => ({ name: species.name, credit: species.photo.credit })),
+    resources: [
+      ...speciesCatalog.map((species) => ({ name: species.name, credit: species.photo.credit })),
+      ...ambienceCatalog.map((ambience) => ({ name: ambience.name, credit: ambience.photo.credit })),
+    ],
   },
   {
     name: 'Chants d’oiseaux',
@@ -23,8 +27,8 @@ const groups: { name: string; resources: { name: string; credit: AssetCredit }[]
     ),
   },
   {
-    name: 'Ambiance',
-    resources: [{ name: 'Brise et feuillage', credit: ambienceCredit }],
+    name: 'Ambiances',
+    resources: ambienceCatalog.map((ambience) => ({ name: ambience.name, credit: ambience.asset.credit })),
   },
 ]
 </script>
