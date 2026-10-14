@@ -66,8 +66,8 @@ stockage est indisponible, le jardin reste utilisable avec ses réglages en mém
 L’interface conserve les commandes HTML natives et leurs focus visibles ; le
 panneau se replie sans masquer l’action d’écoute. La préférence de réduction
 des animations désactive les mouvements des oiseaux et les transitions.
-Le favicon est reporté. La validation navigateur approfondie et la publication
-restent à l’[étape 5 de la roadmap](.ai/plans/roadmap.md).
+Le favicon est servi depuis `public/` à noms stables. La validation navigateur
+approfondie et la publication restent à l’[étape 5 de la roadmap](.ai/plans/roadmap.md).
 
 ## Sources des ambiances
 
@@ -188,6 +188,7 @@ de réduction des animations et de visibilité que le rouge-gorge.
 - `src/storage/` : validation et accès protégés aux préférences locales.
 - `src/data/` : espèces, ressources du jardin, crédits et réglages initiaux.
 - `src/assets/` : images et sons locaux importés via Vite.
+- `public/` : favicon, icônes et manifeste aux noms fixes requis par les navigateurs.
 - `src/types.ts` : identifiants, réglages, états et crédits.
 
 Les liens externes servent uniquement à consulter sources et licences.

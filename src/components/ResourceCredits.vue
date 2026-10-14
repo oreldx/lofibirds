@@ -2,13 +2,14 @@
 import type { AssetCredit } from '../types'
 import { speciesCatalog } from '../data/species'
 import { ambienceCatalog } from '../data/ambiences'
-import { gardenCredit } from '../data/credits'
+import { faviconCredit, gardenCredit } from '../data/credits'
 
 const groups: { name: string; resources: { name: string; credit: AssetCredit }[] }[] = [
   {
     name: 'Illustrations',
     resources: [
       { name: 'Décor du jardin', credit: gardenCredit },
+      { name: 'Favicon', credit: faviconCredit },
       ...speciesCatalog.map((species) => ({ name: `${species.name} — 12 poses`, credit: species.sprite.credit })),
     ],
   },
