@@ -82,14 +82,6 @@ export const audioCredits = {
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Turdus_merula_2.ogg',
     modifications: ['Extrait, volume ajusté, conversion en mono MP3 et fondus'],
   },
-  'rouge-gorge': {
-    author: 'Jan Cibulka',
-    source: 'Erithacus rubecula · XC441752 — Wikimedia Commons',
-    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_-_European_Robin_XC441752.mp3',
-    license: 'CC BY-SA 4.0 — adaptation sous la même licence',
-    licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
-    modifications: ['Volume ajusté, réencodage en mono MP3 et fondus'],
-  },
   'mesange-charbonniere': {
     ...publicDomain,
     source: 'Parus major — Wikimedia Commons',
@@ -108,7 +100,51 @@ export const audioCredits = {
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Fringilla_coelebs_short.ogg',
     modifications: ['Volume ajusté, conversion en mono MP3 et fondus'],
   },
-} satisfies Record<SpeciesId, AssetCredit>
+} satisfies Partial<Record<SpeciesId, AssetCredit>>
+
+const preparedBirdModifications = [
+  'Silences de bord raccourcis ; vitesse et hauteur conservées',
+  'Gain statique visant −23 dBFS RMS, avec crêtes plafonnées à −5 dBFS avant encodage',
+  'Fondus de bord de 20 ms ; réencodage MP3 mono 44,1 kHz à 128 kbit/s',
+]
+
+export const additionalBirdAudioCredits = {
+  'merle-noir-3486': {
+    author: 'Le tiroir du fond',
+    source: 'Merle noir #13 · 3486 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/merle-noir-13-s3486.html',
+    license: 'CC0 1.0',
+    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    modifications: [...preparedBirdModifications, 'Extrait de 0,20 à 4,50 s'],
+  },
+  'rouge-gorge-1670': {
+    author: 'Joseph SARDIN',
+    source: 'Rouge-gorge #4 · 1670 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/rouge-gorge-4-s1670.html',
+    license: 'CC0 1.0',
+    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    modifications: [...preparedBirdModifications, 'Extrait de 0,05 à 3,05 s'],
+  },
+  'rouge-gorge-1671': {
+    author: 'Joseph SARDIN',
+    source: 'Rouge-gorge #5 · 1671 — LaSonothèque',
+    sourceUrl: 'https://lasonotheque.org/rouge-gorge-5-s1671.html',
+    license: 'CC0 1.0',
+    licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+    modifications: [...preparedBirdModifications, 'Extrait de 0,02 à 2,15 s'],
+  },
+  'pinson-sonotheque': {
+    author: null,
+    source: 'pinson.mp3 fourni pour Lofibirds ; provenance LaSonothèque indiquée par le propriétaire du projet, fiche exacte non identifiée',
+    sourceUrl: 'https://lasonotheque.org/',
+    license: 'Licence non confirmée — fiche source à identifier',
+    licenseUrl: null,
+    modifications: [
+      ...preparedBirdModifications,
+      'Extrait de 3,85 à 7,50 s ; repos gérés par le planificateur',
+    ],
+  },
+} satisfies Record<string, AssetCredit>
 
 const ambienceCredit: AssetCredit = {
   author: 'o_ciz',

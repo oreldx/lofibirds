@@ -70,6 +70,38 @@ La destruction libère les sources, les nœuds, la minuterie et le contexte.
 Les chants et les ambiances sont des fichiers MP3 locaux ; leur décodage doit être
 vérifié dans Chrome, Firefox et Safari.
 
+## Préparation des enregistrements
+
+`tools/prepare-bird-audio.py` prépare les quatre MP3 fournis à la racine sans
+modifier les originaux. Il nécessite Python 3 et FFmpeg avec `libmp3lame` :
+
+```sh
+python3 tools/prepare-bird-audio.py --ffmpeg /chemin/vers/ffmpeg
+```
+
+Les recettes du script définissent les coupes, dont l’extrait du pinson
+de 3,85 à 7,50 secondes dans l’original. Le traitement conserve la
+dynamique, la vitesse et la hauteur : gain statique calculé sur chaque extrait,
+fondus courts, puis MP3 mono. Les enveloppes de lecture du moteur s’appliquent
+ensuite. Aucun débruitage ni compression n’est appliqué. Le script contrôle les
+crêtes après réencodage et imprime les mesures et empreintes des sources en JSON.
+Les crédits et les réserves de provenance sont dans `src/data/credits.ts`,
+également consultables dans « À propos » pour ces enregistrements.
+
+Mesures après traitement (FFmpeg 7.1, avant gains du moteur) :
+
+| Extrait | Durée | Gain appliqué | Crête décodée | RMS décodé | Poids |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Merle 3486 | 4,30 s | −6,98 dB | −7,31 dBFS | −23,45 dBFS | 69 842 octets |
+| Rouge-gorge 1670 | 3,00 s | −6,02 dB | −6,54 dBFS | −23,45 dBFS | 48 944 octets |
+| Rouge-gorge 1671 | 2,13 s | −7,52 dB | −7,97 dBFS | −23,44 dBFS | 35 151 octets |
+| Pinson LaSonothèque | 3,65 s | −6,72 dB | −10,20 dBFS | −23,45 dBFS | 59 393 octets |
+
+Ces mesures vérifient le décodage et la marge numérique ; elles ne remplacent
+pas une écoute du mélange dans les navigateurs ciblés.
+
+## Limites de continuité
+
 Au-delà des 180 secondes préparées, un gel du thread peut créer un silence
 jusqu’au prochain renouvellement. L’anticipation ne garantit pas la lecture
 pendant une suspension du navigateur ou du système. Les vérifications dans les
